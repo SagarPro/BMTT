@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rlProfile"
+    tools:context="com.sagsaguz.bmtt.ProfileActivity">
+
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:elevation="15dp"
+        android:id="@+id/pbProfile"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        android:layout_below="@id/ivBgTop"
+        android:id="@+id/ivBgBottom"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/colorPrimaryDark"
+        android:id="@+id/ivBgTop"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:layout_margin="5dp"
+        android:paddingStart="1dp"
+        android:paddingEnd="1dp"
+        android:background="@color/shadow"
+        android:id="@+id/rlTimeCompletion">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:background="@color/slightWhite"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:background="@color/colorPrimaryDark"
+            android:id="@+id/ivTimeCompletion"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Days left"
+            android:textSize="14sp"
+            android:textColor="@color/grey"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/tvDaysLeft"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/icon_back_arrow_white"
+        android:layout_below="@+id/tvAdmissionDate"
+        android:id="@+id/backArrow"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jan 23, 2018"
+        android:textSize="14sp"
+        android:textColor="@color/colorAccent"
+        android:layout_marginStart="3dp"
+        android:layout_below="@id/rlTimeCompletion"
+        android:id="@+id/tvAdmissionDate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Feb 23, 2018"
+        android:textSize="14sp"
+        android:textColor="@color/colorAccent"
+        android:layout_marginEnd="3dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/rlTimeCompletion"
+        android:id="@+id/tvExpiryDate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Course Completed"
+        android:textSize="14sp"
+        android:textColor="@color/grey"
+        android:layout_above="@id/rlCourseCompletion"
+        android:id="@+id/tvCourseCompleted"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_margin="5dp"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/shadow"
+        android:id="@+id/rlCourseCompletion">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:background="@color/slightWhite"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:background="@color/colorPrimary"
+            android:id="@+id/ivCourseCompletion"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="14sp"
+            android:textColor="@color/grey"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/tvCourseCompletion"/>
+
+    </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="102dp"
+        android:layout_height="102dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:padding="2dp"
+        android:src="@color/colorPrimaryDark"
+        android:background="@drawable/white_circle_image_bg"
+        android:layout_above="@+id/ivBgBottom"
+        android:id="@+id/ivProfilePic" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="20dp"
+        android:elevation="10dp"
+        android:background="@drawable/round_corners_bg"
+        android:id="@+id/rlTop">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="user name"
+                android:textSize="22sp"
+                android:textColor="@color/darkGrey"
+                android:id="@+id/tvFullName"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="centre"
+                android:textSize="16sp"
+                android:textColor="@color/grey"
+                android:id="@+id/tvCentre"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/textColor"
+        android:layout_below="@+id/rlTop"
+        android:layout_marginTop="20dp"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:background="@color/textColor"
+        android:layout_below="@+id/rlTop"
+        android:layout_above="@+id/tvCourseCompleted"
+        android:layout_marginTop="20dp"
+        android:id="@+id/indicator_view"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/rlTop"
+        android:layout_above="@+id/tvCourseCompleted"
+        android:layout_marginTop="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlBottom">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="30dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:id="@+id/rlEmailAddress">
+
+            <View
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/circle_image_bg"
+                android:id="@+id/emailAddressView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/emailAddressView"
+                android:text="Email Address"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/emailAddress"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/emailAddressView"
+                android:text="email address"
+                android:textColor="@color/darkGrey"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/emailAddress"
+                android:id="@+id/tvEmailAddress"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="57dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/silver2"
+            android:layout_below="@id/rlEmailAddress"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:layout_below="@+id/rlEmailAddress"
+            android:id="@+id/rlPassword">
+
+            <View
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/circle_image_bg"
+                android:id="@+id/passwordView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/passwordView"
+                android:text="Password"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/password"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/passwordView"
+                android:text="password"
+                android:textColor="@color/darkGrey"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/password"
+                android:id="@+id/tvPassword"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="57dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/silver2"
+            android:layout_below="@id/rlPassword"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:layout_below="@+id/rlPassword"
+            android:id="@+id/rlPhone">
+
+            <View
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/circle_image_bg"
+                android:id="@+id/phoneView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/phoneView"
+                android:text="Phone"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/phone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/phoneView"
+                android:text="phone"
+                android:textColor="@color/darkGrey"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/phone"
+                android:id="@+id/tvPhone"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="57dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/silver2"
+            android:layout_below="@id/rlPhone"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:layout_below="@+id/rlPhone"
+            android:id="@+id/rlDOB">
+
+            <View
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/circle_image_bg"
+                android:id="@+id/dobView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/dobView"
+                android:text="Date of birth"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/dob"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/dobView"
+                android:text="Date of birth"
+                android:textColor="@color/darkGrey"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/dob"
+                android:id="@+id/tvDOB"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="57dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/silver2"
+            android:layout_below="@id/rlDOB"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:layout_below="@+id/rlDOB"
+            android:id="@+id/rlEnrolledIn">
+
+            <View
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/circle_image_bg"
+                android:id="@+id/enrolledInView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/enrolledInView"
+                android:text="Enrolled In"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/enrolledIn"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/enrolledInView"
+                android:text="Parts"
+                android:textColor="@color/darkGrey"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/enrolledIn"
+                android:id="@+id/tvEnrolledIn"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="57dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/silver2"
+            android:layout_below="@id/rlEnrolledIn"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:layout_below="@+id/rlEnrolledIn"
+            android:id="@+id/rlAddress">
+
+            <View
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/circle_image_bg"
+                android:id="@+id/addressView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/addressView"
+                android:text="Address"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/address"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/addressView"
+                android:text="Address"
+                android:textColor="@color/darkGrey"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/address"
+                android:id="@+id/tvAddress"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="57dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/silver2"
+            android:layout_below="@id/rlAddress"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginStart="57dp"
+            android:layout_marginEnd="30dp"
+            android:layout_below="@id/rlAddress"/>
+
+    </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

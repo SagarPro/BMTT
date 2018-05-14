@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border"
+    android:padding="5dp">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/star_circle"
+        android:id="@+id/ivNotificationIcon"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/ivNotificationIcon"
+        android:layout_marginStart="10dp"
+        android:text="BMTT"
+        android:textColor="@color/darkGrey"
+        android:textSize="18sp"
+        android:maxLines="1"
+        android:id="@+id/tvNotificationTitle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/ivNotificationIcon"
+        android:layout_below="@id/tvNotificationTitle"
+        android:layout_marginStart="10dp"
+        android:text="BMTT Notification Message"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:id="@+id/tvNotificationMessage"/>
+
+</RelativeLayout>

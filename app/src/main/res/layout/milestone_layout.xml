@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/slightWhite"
+    android:id="@+id/rlMilestone"
+    android:layout_weight="1"
+    tools:context="com.sagsaguz.bmtt.MilestoneActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:layout_margin="5dp"
+        android:paddingStart="1dp"
+        android:paddingEnd="2dp"
+        android:background="@color/shadow"
+        android:id="@+id/rlTimeCompletion">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:background="@color/slightWhite"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:background="@color/orange"
+            android:id="@+id/ivTimeCompletion"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Days left"
+            android:textSize="14sp"
+            android:textColor="@color/grey"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/tvDaysLeft"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jan 23, 2018"
+        android:textSize="14sp"
+        android:textColor="@color/grey"
+        android:layout_marginStart="3dp"
+        android:layout_below="@id/rlTimeCompletion"
+        android:id="@+id/tvAdmissionDate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Feb 23, 2018"
+        android:textSize="14sp"
+        android:textColor="@color/grey"
+        android:layout_marginEnd="3dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/rlTimeCompletion"
+        android:id="@+id/tvExpiryDate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Course Completed"
+        android:textSize="14sp"
+        android:textColor="@color/grey"
+        android:layout_above="@id/rlCourseCompletion"
+        android:id="@+id/tvCourseCompleted"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:layout_margin="5dp"
+        android:paddingStart="2dp"
+        android:paddingEnd="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/shadow"
+        android:id="@+id/rlCourseCompletion">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:background="@color/slightWhite"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:background="@color/orange"
+            android:id="@+id/ivCourseCompletion"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="14sp"
+            android:textColor="@color/grey"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/tvCourseCompletion"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tvCourseCompleted"
+        android:layout_below="@id/tvAdmissionDate"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:paddingTop="2dp"
+        android:background="@color/slightWhite"
+        android:elevation="5dp">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/slightWhite"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:id="@+id/tab_bottom">
+
+            <android.support.design.widget.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="fixed"
+                app:tabGravity="fill"
+                app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabTextColor="@color/shadow"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                android:id="@+id/tabParts"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/tab_bottom"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:id="@+id/msViewPager" />
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:elevation="5dp"
+        android:id="@+id/pbMilestone"/>
+
+    <!--<ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tvCourseCompleted"
+        android:layout_below="@id/tvAdmissionDate"
+        android:layout_margin="10dp"
+        android:dividerHeight="5dp"
+        android:scrollbars="none"
+        android:divider="@android:color/transparent"
+        android:id="@+id/lvVideos"/>-->
+
+</RelativeLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/new_questions"
+        android:title="New Questions"
+        android:icon="@drawable/icon_user_questions"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/user_questions"
+        android:title="User Questions"
+        android:icon="@drawable/icon_user_questions"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/all_questions"
+        android:title="All Questions"
+        android:icon="@drawable/icon_answered_questions"
+        app:showAsAction="ifRoom"/>
+
+</menu>

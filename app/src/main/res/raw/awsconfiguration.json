@@ -1,0 +1,38 @@
+{
+  "UserAgent": "MobileHub/1.0",
+  "Version": "1.0",
+  "CredentialsProvider": {
+    "CognitoIdentity": {
+      "Default": {
+        "PoolId": "us-east-1:3a860d85-3680-40a6-b193-5826ba8b654e",
+        "Region": "us-east-1"
+      }
+    }
+  },
+  "IdentityManager": {
+    "Default": {}
+  },
+  "DynamoDBObjectMapper": {
+    "Default": {
+      "Region": "us-east-1"
+    }
+  },
+  "ContentManager": {
+    "Default": {
+      "Bucket": "bmtt-hosting-mobilehub-1157786907",
+      "Region": "us-east-1",
+      "CloudFrontURL": "https://d10ied03to29oc.cloudfront.net"
+    }
+  },
+  "PinpointAnalytics": {
+    "Default": {
+      "AppId": "36fa67d3f675417f82ab18f3e2bfd7cc",
+      "Region": "us-east-1"
+    }
+  },
+  "PinpointTargeting": {
+    "Default": {
+      "Region": "us-east-1"
+    }
+  }
+}

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/grey"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Practical Details"
+        android:textColor="@color/silver"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvTitle"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/tvTitle"
+        android:background="@color/colorPrimary"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/rlDetails">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Practical Name :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/pName"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pName"
+            android:hint="Enter practical name"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:textCursorDrawable="@null"
+            android:background="@color/colorAccent"
+            android:id="@+id/etPName"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etPName"
+            android:text="Date :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/date"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/date"
+            android:text="Click here"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorAccent"
+            android:id="@+id/tvPDate"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvPDate"
+            android:text="Time :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/time"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/time"
+            android:text="Click here"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorAccent"
+            android:id="@+id/tvPTime"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@id/rlDetails"
+        android:background="@color/colorPrimaryDark"
+        android:id="@+id/btnPCancel"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@id/rlDetails"
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorPrimaryDark"
+        android:id="@+id/btnPSend"/>
+
+</RelativeLayout>

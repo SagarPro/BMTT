@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/silver2"
+    android:padding="10dp"
+    android:id="@+id/rlMCQ"
+    tools:context="com.sagsaguz.bmtt.MCQActivity">
+
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:elevation="6dp"
+        android:id="@+id/pbMCQ"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Question ?"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:padding="10dp"
+        android:elevation="5dp"
+        android:background="@color/colorPrimary"
+        android:id="@+id/tvQuestion"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tvQuestion"
+        android:layout_above="@+id/btnCheck">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rgOpt">
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Option 1"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:elevation="5dp"
+                android:layout_marginTop="10dp"
+                android:buttonTint="@color/colorPrimary"
+                android:background="@color/colorAccent"
+                android:id="@+id/rbOpt1"/>
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Option 2"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:elevation="5dp"
+                android:layout_marginTop="10dp"
+                android:buttonTint="@color/colorPrimary"
+                android:background="@color/colorAccent"
+                android:id="@+id/rbOpt2"/>
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Option 3"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:elevation="5dp"
+                android:layout_marginTop="10dp"
+                android:buttonTint="@color/colorPrimary"
+                android:background="@color/colorAccent"
+                android:id="@+id/rbOpt3"/>
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Option 4"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:elevation="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:buttonTint="@color/colorPrimary"
+                android:background="@color/colorAccent"
+                android:id="@+id/rbOpt4"/>
+
+        </RadioGroup>
+
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Check"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
+        android:textAllCaps="false"
+        android:elevation="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:id="@+id/btnCheck"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Next"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
+        android:textAllCaps="false"
+        android:elevation="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:visibility="gone"
+        android:id="@+id/btnNext"/>
+
+</RelativeLayout>

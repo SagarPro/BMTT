@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rlAddUser"
+    tools:context="com.sagsaguz.bmtt.AddUserActivity">
+
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:elevation="15dp"
+        android:id="@+id/pbAddUser"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/colorPrimary"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create New User"
+        android:textSize="26sp"
+        android:textColor="@color/colorAccent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/tvNewUser"/>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="70dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/action_down"
+        android:id="@+id/action_down"/>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/action_up"
+        android:id="@+id/action_up"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="25dp"
+        android:background="@color/silver"
+        android:elevation="10dp"
+        android:id="@+id/rlUserDetails">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_margin="15dp"
+            android:id="@+id/scrollView">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="102dp"
+                    android:layout_height="102dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:padding="2dp"
+                    android:background="@drawable/circle_image_bg"
+                    android:id="@+id/ivProfilePic" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="First Name * (cannot change)"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="textPersonName"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/grey"
+                    android:textSize="18sp"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/border"
+                    android:nextFocusUp="@id/etFirstName"
+                    android:nextFocusLeft="@id/etFirstName"
+                    android:layout_below="@+id/ivProfilePic"
+                    android:id="@+id/etFirstName"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Last Name * (cannot change)"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="textPersonName"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/grey"
+                    android:textSize="18sp"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/border"
+                    android:layout_below="@+id/etFirstName"
+                    android:id="@+id/etLastName"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Date of birth *"
+                    android:textColorHint="@color/textColor"
+                    android:textColor="@color/grey"
+                    android:textCursorDrawable="@null"
+                    android:inputType="date"
+                    android:textSize="18sp"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/border"
+                    android:layout_below="@+id/etLastName"
+                    android:id="@+id/etDOB"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="textLongMessage"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/grey"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/border"
+                    android:layout_below="@+id/etDOB"
+                    android:overlapAnchor="false"
+                    android:id="@+id/centreSpinner"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address *"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="textLongMessage"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/grey"
+                    android:textSize="18sp"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/border"
+                    android:layout_below="@+id/centreSpinner"
+                    android:id="@+id/etAddress"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone *"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="phone"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/grey"
+                    android:textSize="18sp"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/border"
+                    android:layout_below="@+id/etAddress"
+                    android:id="@+id/etPhone"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email * (cannot change)"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="textEmailAddress"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/grey"
+                    android:textSize="18sp"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/border"
+                    android:layout_below="@+id/etPhone"
+                    android:id="@+id/etEmail"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password *"
+                    android:textColorHint="@color/textColor"
+                    android:inputType="textPassword"
+                    android:textCursorDrawable="@null"
+                    android:textColor="@color/grey"
+                    android:textSize="18sp"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/border"
+                    android:layout_below="@+id/etEmail"
+                    android:id="@+id/etPassword"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@+id/etPassword"
+                    android:id="@+id/enrollUser">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enroll user in : *"
+                        android:textSize="18sp"
+                        android:padding="5dp"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="BMTT part 1"
+                        android:textColor="@color/grey"
+                        android:id="@+id/cbPart1"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="BMTT part 2"
+                        android:textColor="@color/grey"
+                        android:id="@+id/cbPart2" />
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="BMTT part 3"
+                        android:textColor="@color/grey"
+                        android:id="@+id/cbPart3" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@+id/enrollUser"
+                    android:id="@+id/expiryDate">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expiry Date : *"
+                        android:textSize="18sp"
+                        android:padding="5dp"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="MMM DD, YYYY"
+                        android:textColorHint="@color/textColor"
+                        android:textColor="@color/grey"
+                        android:textCursorDrawable="@null"
+                        android:inputType="date"
+                        android:textSize="18sp"
+                        android:maxLines="1"
+                        android:padding="10dp"
+                        android:background="@drawable/border"
+                        android:id="@+id/etExpiryDate"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorAccent"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_below="@+id/expiryDate"
+                    android:id="@+id/saveUser"/>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

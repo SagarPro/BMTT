@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="48dp"
+    android:layout_height="fill_parent"
+    android:layout_gravity="right">
+
+    &lt;!&ndash; Menu Item Image &ndash;&gt;
+    &lt;!&ndash;<ImageView
+        android:layout_width="48dp"
+        android:layout_height="fill_parent"
+        android:clickable="true"
+        android:src="@drawable/icon_new_questions"
+        android:id="@+id/menu_question"/>&ndash;&gt;
+
+    &lt;!&ndash; Badge Count &ndash;&gt;
+
+</RelativeLayout>-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/counterPanel"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:layout_gravity="right"
+    android:background="@drawable/icon_user_questions">
+
+    <RelativeLayout
+        android:id="@+id/counterValuePanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:padding="3dp"
+        android:background="@drawable/questions_counter_bg" >
+
+        <ImageView
+            android:id="@+id/counterBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/questions_counter_bg" />
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="11sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorAccent" />
+    </RelativeLayout>
+
+</FrameLayout>

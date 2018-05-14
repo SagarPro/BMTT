@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:layout_margin="5dp"
+    android:background="@color/shadow">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="2dp"
+        android:layout_marginEnd="1dp"
+        android:background="@color/colorAccent">
+
+        <View
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_toEndOf="@id/view"
+            android:layout_marginStart="5dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/blue_circle_image_bg"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/view"
+            android:layout_marginStart="7dp"
+            android:transitionName="profilePic"
+            android:id="@+id/ivUserPic" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/darkGrey"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/ivUserPic"
+            android:text="TextView"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:id="@+id/userName" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/grey"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/ivUserPic"
+            android:text="TextView"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_below="@id/userName"
+            android:id="@+id/userCentre"/>
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="75dp"
+            android:background="@color/colorPrimary"
+            android:id="@+id/view"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_margin="5dp"
+    android:background="@color/colorAccent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="30dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toStartOf="@id/cbUser"
+        android:layout_toEndOf="@id/view"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/darkGrey"
+            android:text="User Name"
+            android:maxLines="1"
+            android:id="@+id/userName" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userName"
+            android:textSize="12sp"
+            android:textColor="@color/grey"
+            android:text="User Email"
+            android:maxLines="1"
+            android:id="@+id/userEmail" />
+
+    </RelativeLayout>
+
+    <CheckBox
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:buttonTint="@color/colorPrimary"
+        android:id="@+id/cbUser"/>
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        android:id="@+id/view"/>
+
+</RelativeLayout>

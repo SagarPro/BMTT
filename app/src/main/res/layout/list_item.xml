@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp" >
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textCursorDrawable="@null"
+        android:background="@android:color/transparent"
+        android:layout_toStartOf="@+id/ivEdit"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:id="@+id/lblListItem" />
+
+    <!--android:layoutDirection="ltr"-->
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"
+        android:src="@drawable/icon_edit"
+        android:id="@+id/ivEdit"/>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"
+        android:src="@drawable/icon_save"
+        android:visibility="gone"
+        android:id="@+id/ivSave"/>
+
+</RelativeLayout>

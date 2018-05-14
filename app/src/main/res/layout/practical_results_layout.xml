@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlPracticalResults"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.sagsaguz.bmtt.PracticalResultsActivity">
+
+    <ProgressBar
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:elevation="5dp"
+        android:id="@+id/pbPDetails"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="1dp"
+        android:scrollbars="none"
+        android:dividerHeight="10dp"
+        android:divider="@android:color/transparent"
+        android:layout_above="@id/rlPBottom"
+        android:id="@+id/lvPracticals"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:text="Not done any practicals"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/tvMessage"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/slightWhite"
+        android:id="@+id/rlPBottom">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="5dp"
+            android:elevation="5dp"
+            android:padding="20dp"
+            app:fabSize="mini"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_add"
+            android:id="@+id/fb_addPractical"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_toStartOf="@id/fb_addPractical"
+            android:inputType="text"
+            android:hint="Search here..."
+            android:textColor="@color/grey"
+            android:paddingStart="20dp"
+            android:paddingEnd="5dp"
+            android:maxLines="1"
+            android:textCursorDrawable="@null"
+            android:background="@android:color/transparent"
+            android:id="@+id/etPSearch"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

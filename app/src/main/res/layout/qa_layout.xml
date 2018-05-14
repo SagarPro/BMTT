@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlQA"
+    tools:context="com.sagsaguz.bmtt.QAActivity"
+    android:background="@color/colorAccent">
+
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:elevation="5dp"
+        android:id="@+id/pbPrepareQA"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:focusable="true"
+        android:id="@+id/view"/>
+
+    <ExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:groupIndicator="@null"
+        android:layout_margin="5dp"
+        android:dividerHeight="5dp"
+        android:scrollbars="none"
+        android:childDivider="@android:color/transparent"
+        android:divider="@color/colorAccent"
+        android:layout_below="@+id/view"
+        android:layout_above="@id/rlQABottom"
+        android:id="@+id/expLv"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/slightWhite"
+        android:id="@+id/rlQABottom">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="5dp"
+            android:elevation="5dp"
+            app:fabSize="mini"
+            android:src="@drawable/icon_add"
+            android:id="@+id/fb_askQuestion"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_toStartOf="@id/fb_addPractical"
+            android:inputType="text"
+            android:hint="Search here..."
+            android:textColor="@color/grey"
+            android:paddingStart="20dp"
+            android:paddingEnd="5dp"
+            android:maxLines="1"
+            android:textCursorDrawable="@null"
+            android:background="@android:color/transparent"
+            android:id="@+id/etQASearch"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/grey"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select users"
+        android:textColor="@color/silver"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvTitle"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/tvTitle"
+        android:background="@color/colorPrimary"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@+id/tvTitle"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:scrollbars="none"
+        android:dividerHeight="5dp"
+        android:divider="@android:color/transparent"
+        android:id="@+id/lvNUsers"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lvNUsers"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="close"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
+            android:layout_weight="1"
+            android:id="@+id/btnNClose"/>
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@color/grey"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="select all"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
+            android:layout_weight="1"
+            android:id="@+id/btnNSelectAll"/>
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@color/grey"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ok"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
+            android:layout_weight="1"
+            android:id="@+id/btnNOk"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
