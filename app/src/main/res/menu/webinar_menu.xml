@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/goto_webinar"
+        android:title="Go To Webinar"
+        android:icon="@drawable/icon_goto"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/webinar_link"
+        android:title="Webinar Links"
+        android:icon="@drawable/icon_link"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/webinar_question"
+        android:title="Webinar Questions"
+        android:icon="@drawable/icon_user_questions"
+        app:showAsAction="ifRoom"/>
+
+</menu>

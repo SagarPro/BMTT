@@ -19,6 +19,8 @@ public class BmttAdminsDO {
     private String _centre;
     private String _password;
     private String _notificationARN;
+    private String _centerCode;
+    private String _location;
 
     @DynamoDBHashKey(attributeName = "emailId")
     @DynamoDBAttribute(attributeName = "emailId")
@@ -61,6 +63,22 @@ public class BmttAdminsDO {
 
     public void setNotificationARN(final String _notificationARN) {
         this._notificationARN = _notificationARN;
+    }
+    @DynamoDBAttribute(attributeName = "centerCode")
+    public String getCenterCode() {
+        return _centerCode;
+    }
+
+    public void setCenterCode(final String _centerCode) {
+        this._centerCode = _centerCode;
+    }
+    @DynamoDBAttribute(attributeName = "location")
+    public String getLocation() {
+        return _location;
+    }
+
+    public void setLocation(final String _location) {
+        this._location = _location;
     }
 
 }

@@ -32,7 +32,6 @@
         android:text="BMTT Notification Message"
         android:textColor="@color/grey"
         android:textSize="16sp"
-        android:maxLines="1"
         android:id="@+id/tvNotificationMessage"/>
 
 </RelativeLayout>

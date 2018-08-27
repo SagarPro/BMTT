@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -17,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,9 +42,17 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.firebase.jobdispatcher.Constraint;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.RetryStrategy;
+import com.firebase.jobdispatcher.Trigger;
 import com.sagsaguz.bmtt.fragments.BmttPart1;
 import com.sagsaguz.bmtt.fragments.BmttPart2;
 import com.sagsaguz.bmtt.fragments.BmttPart3;
+import com.sagsaguz.bmtt.services.FirebaseDispatcher;
 import com.sagsaguz.bmtt.utils.AWSProvider;
 import com.sagsaguz.bmtt.utils.BmttUsersDO;
 import com.sagsaguz.bmtt.utils.Config;
@@ -66,7 +76,7 @@ public class HomePageActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private static RelativeLayout rlHomePage;
 
-    private ImageView ivLogout, ivProfile, ivQA, ivPracticals, ivNotifications;
+    private ImageView ivLogout, ivProfile, ivQA, ivPracticals, ivWebinar, ivAttachment, ivNotifications;
     @SuppressLint("StaticFieldLeak")
     public static View notificationIndicator;
     private LinearLayout llBottomMenu;
@@ -98,6 +108,8 @@ public class HomePageActivity extends AppCompatActivity {
 
     private static Context context;
 
+    FirebaseJobDispatcher firebaseJobDispatcher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,13 +133,13 @@ public class HomePageActivity extends AppCompatActivity {
             if ("xiaomi".equalsIgnoreCase(android.os.Build.MANUFACTURER)) {
                 autoStartIntent.setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"));
                 autoStartDialog();
-            } else if ("oppo".equalsIgnoreCase(android.os.Build.MANUFACTURER)) {
+            }/* else if ("oppo".equalsIgnoreCase(android.os.Build.MANUFACTURER)) {
                 autoStartIntent.setComponent(new ComponentName("com.coloros.safecenter", "com.coloros.safecenter.permission.startup.StartupAppListActivity"));
                 autoStartDialog();
             } else if ("vivo".equalsIgnoreCase(android.os.Build.MANUFACTURER)) {
                 autoStartIntent.setComponent(new ComponentName("com.iqoo.secure", "com.iqoo.secure.MainGuideActivity."));
                 autoStartDialog();
-            }
+            }*/
             SharedPreferences.Editor editor = autoStart.edit();
             editor.putBoolean("ENABLE", true);
             editor.apply();
@@ -142,8 +154,24 @@ public class HomePageActivity extends AppCompatActivity {
         ivLogout = findViewById(R.id.ivLogout);
         ivProfile = findViewById(R.id.ivProfile);
         ivPracticals = findViewById(R.id.ivPracticals);
+        ivPracticals.setVisibility(View.GONE);
         ivQA = findViewById(R.id.ivQA);
+        ivWebinar = findViewById(R.id.ivWebinar);
+        ivAttachment = findViewById(R.id.ivAttachment);
         ivNotifications = findViewById(R.id.ivNotifications);
+
+        firebaseJobDispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
+        Job job = firebaseJobDispatcher.newJobBuilder()
+                .setService(FirebaseDispatcher.class)
+                .setLifetime(Lifetime.FOREVER)
+                .setRecurring(true)
+                .setTag("1")
+                .setTrigger(Trigger.executionWindow(300,480))
+                .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
+                .setReplaceCurrent(false)
+                .setConstraints(Constraint.ON_ANY_NETWORK).build();
+
+        firebaseJobDispatcher.mustSchedule(job);
 
         notificationIndicator = findViewById(R.id.notificationIndicator);
         notificationPref = getSharedPreferences("NOTIFICATIONINDICATOR", MODE_PRIVATE);
@@ -241,6 +269,26 @@ public class HomePageActivity extends AppCompatActivity {
                 intent.putExtra("USERTYPE", "user");
                 intent.putExtra("EMAIL", email);
                 intent.putExtra("NAME", name);
+                startActivity(intent);
+            }
+        });
+
+        ivWebinar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), WebinarActivity.class);
+                intent.putExtra("USERTYPE", "user");
+                intent.putExtra("EMAIL", email);
+                intent.putExtra("NAME", name);
+                startActivity(intent);
+            }
+        });
+
+        ivAttachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), AttachmentsActivity.class);
+                intent.putExtra("USERTYPE", "user");
                 startActivity(intent);
             }
         });
@@ -544,7 +592,7 @@ public class HomePageActivity extends AppCompatActivity {
         BmttUsersDO bmttUsersDO = new BmttUsersDO();
         Date currentDate, expiryDate;
         SimpleDateFormat df;
-        Boolean expired;
+        Boolean expired, awsException;
 
         @Override
         protected void onPreExecute() {
@@ -555,6 +603,7 @@ public class HomePageActivity extends AppCompatActivity {
             homePageActivity.allList.clear();
             homePageActivity.totalVideoCount = 0;
             expired = false;
+            awsException = false;
             Date c = Calendar.getInstance().getTime();
             df = new SimpleDateFormat("MMM dd, yyyy");
             String formattedDate = df.format(c.getTime());
@@ -654,6 +703,7 @@ public class HomePageActivity extends AppCompatActivity {
                     expired = true;
                 }
             } catch (AmazonClientException e){
+                awsException =true;
                 homePageActivity.showSnackBar("Network connection error!!");
             }
 
@@ -666,16 +716,22 @@ public class HomePageActivity extends AppCompatActivity {
                 pbHomePage.setVisibility(View.GONE);
             }
             if (!expired) {
-                if (bmttUsersDO.getEmailId() != null) {
+                if (bmttUsersDO.getEmailId() != null && !awsException) {
                     homePageActivity.setTabDetails(bmttUsersDO);
-                    homePageActivity.llBottomMenu.setVisibility(View.VISIBLE);
+                    homePageActivity.llBottomMenu.setVisibility(View.INVISIBLE);
                 }
             } else {
                 SharedPreferences.Editor editor = userPreferences.edit();
                 editor.putString("LOGIN", "logout");
                 editor.apply();
-                homePageActivity.startActivity(new Intent(homePageActivity, LoginActivity.class));
-                homePageActivity.finish();
+                homePageActivity.basicSnackBar("Your account is expired\nPlease contact centre for more details.");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        homePageActivity.startActivity(new Intent(homePageActivity, LoginActivity.class));
+                        homePageActivity.finish();
+                    }
+                }, 1500);
             }
         }
     }

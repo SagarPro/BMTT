@@ -146,6 +146,31 @@
         android:layout_above="@+id/ivBgBottom"
         android:id="@+id/ivProfilePic" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Student ID"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginBottom="50dp"
+        android:layout_toStartOf="@+id/ivProfilePic"
+        android:layout_above="@+id/ivBgBottom"
+        android:id="@+id/tvUserId"/>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/ivBgBottom"
+        android:src="@drawable/icon_practicals"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="50dp"
+        android:layout_toEndOf="@+id/ivProfilePic"
+        android:id="@+id/ivMarksSheet"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -167,7 +192,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="user name"
+                android:text="student name"
                 android:textSize="22sp"
                 android:textColor="@color/darkGrey"
                 android:id="@+id/tvFullName"/>
@@ -432,7 +457,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/enrolledInView"
-                android:text="Enrolled In"
+                android:text="Course Material Access"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 android:layout_marginStart="20dp"
@@ -442,12 +467,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/enrolledInView"
-                android:text="Parts"
-                android:textColor="@color/darkGrey"
+                android:text="Term 1 - part 1"
+                android:textColor="@color/shadow"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_below="@id/enrolledIn"
-                android:id="@+id/tvEnrolledIn"/>
+                android:id="@+id/tvEnrolledIn1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/enrolledInView"
+                android:text="Term 1 - part 2"
+                android:textColor="@color/shadow"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/tvEnrolledIn1"
+                android:id="@+id/tvEnrolledIn2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/enrolledInView"
+                android:text="Term 2"
+                android:textColor="@color/shadow"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/tvEnrolledIn2"
+                android:id="@+id/tvEnrolledIn3"/>
 
         </RelativeLayout>
 
@@ -508,12 +555,566 @@
             android:background="@color/silver2"
             android:layout_below="@id/rlAddress"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:layout_below="@+id/rlAddress"
+            android:id="@+id/rlPayment">
+
+            <View
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/circle_image_bg"
+                android:id="@+id/paymentView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/paymentView"
+                android:text="Payment"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/payment"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toEndOf="@id/paymentView"
+                android:layout_below="@id/payment"
+                android:id="@+id/llPayment">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rlPayment1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="instalment - 1"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="16sp"
+                        android:layout_marginStart="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/btnPay1"
+                        android:id="@+id/tvPayment1"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pay Now"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:background="@color/red"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="3dp"
+                        android:id="@+id/btnPay1"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rlPayment2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="instalment - 2"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="16sp"
+                        android:layout_marginStart="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/btnPay2"
+                        android:id="@+id/tvPayment2"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pay Now"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:background="@color/red"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="3dp"
+                        android:id="@+id/btnPay2"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rlPayment3">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="instalment - 3"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="16sp"
+                        android:layout_marginStart="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/btnPay3"
+                        android:id="@+id/tvPayment3"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pay Now"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:background="@color/red"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="3dp"
+                        android:id="@+id/btnPay3"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@color/colorPrimary"
+                    android:alpha="0.3"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TOTAL PAID :  "
+                        android:textSize="18sp"
+                        android:textColor="@color/darkGrey"
+                        android:id="@+id/totalPaid"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5000 Rs"
+                        android:textSize="18sp"
+                        android:textColor="@color/darkGrey"
+                        android:layout_toEndOf="@+id/totalPaid"
+                        android:id="@+id/tvTotalPaid"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TOTAL FEES :  "
+                        android:textSize="18sp"
+                        android:textColor="@color/darkGrey"
+                        android:id="@+id/total"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5000 Rs"
+                        android:textSize="18sp"
+                        android:textColor="@color/darkGrey"
+                        android:layout_toEndOf="@+id/total"
+                        android:id="@+id/tvTotal"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="57dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/silver2"
+            android:layout_below="@id/rlPayment"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:layout_below="@+id/rlPayment"
+            android:id="@+id/rlFileSub">
+
+            <View
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/circle_image_bg"
+                android:id="@+id/fileSubView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/fileSubView"
+                android:text="File Submission"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/fileSub"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fileSub"
+                android:layout_toEndOf="@id/fileSubView"
+                android:layout_marginStart="20dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rlFile1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EPL"
+                        android:textSize="20sp"
+                        android:textColor="@color/darkGrey"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:layout_marginBottom="3dp"
+                        android:id="@+id/fName1"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:id="@+id/view1"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:weightSum="3"
+                        android:id="@+id/llBottom1">
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Submitted"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbSubmitted1"/>
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Received"
+                            android:enabled="false"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbReceived1"/>
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Evaluated"
+                            android:enabled="false"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbEvaluated1"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/silver2"
+                        android:layout_below="@id/llBottom1"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fileSub"
+                    android:id="@+id/rlFile2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sensorial"
+                        android:textSize="20sp"
+                        android:textColor="@color/darkGrey"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:layout_marginBottom="3dp"
+                        android:id="@+id/fName2"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:id="@+id/view2"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:weightSum="3"
+                        android:id="@+id/llBottom2">
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Submitted"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbSubmitted2"/>
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Received"
+                            android:enabled="false"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbReceived2"/>
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Evaluated"
+                            android:enabled="false"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbEvaluated2"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/silver2"
+                        android:layout_below="@id/llBottom2"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rlFile3">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Arithmetic"
+                        android:textSize="20sp"
+                        android:textColor="@color/darkGrey"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:layout_marginBottom="3dp"
+                        android:id="@+id/fName3"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:id="@+id/view3"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:weightSum="3"
+                        android:id="@+id/llBottom3">
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Submitted"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbSubmitted3"/>
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Received"
+                            android:enabled="false"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbReceived3"/>
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Evaluated"
+                            android:enabled="false"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbEvaluated3"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/silver2"
+                        android:layout_below="@id/llBottom3"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rlFile4">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Language"
+                        android:textSize="20sp"
+                        android:textColor="@color/darkGrey"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:layout_marginBottom="3dp"
+                        android:id="@+id/fName4"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:id="@+id/view4"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:weightSum="3"
+                        android:id="@+id/llBottom4">
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Submitted"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbSubmitted4"/>
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Received"
+                            android:enabled="false"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbReceived4"/>
+
+                        <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="Evaluated"
+                            android:enabled="false"
+                            android:buttonTint="@color/primary_blue"
+                            android:id="@+id/cbEvaluated4"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/silver2"
+                        android:layout_below="@id/llBottom4"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <!--<ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="3dp"
+                android:layout_toEndOf="@id/fileSubView"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/fileSub"
+                android:id="@+id/lvFileSub"/>-->
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="57dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/silver2"
+            android:layout_below="@id/rlFileSub"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="6dp"
             android:layout_marginStart="57dp"
             android:layout_marginEnd="30dp"
-            android:layout_below="@id/rlAddress"/>
+            android:layout_below="@id/rlPayment"/>
 
     </RelativeLayout>
 

@@ -151,7 +151,7 @@ public class MCQActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setResultRBColor(selectedOpt, correctOpt);
-                if(questionNumber<5)
+                if(questionNumber<10)
                     questionNumber++;
                 btnCheck.setVisibility(View.GONE);
                 btnNext.setVisibility(View.VISIBLE);
@@ -162,7 +162,7 @@ public class MCQActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(questionNumber<5) {
+                if(questionNumber<10) {
                     setQuestion(questionNumber);
                     btnNext.setVisibility(View.GONE);
                     btnCheck.setVisibility(View.VISIBLE);

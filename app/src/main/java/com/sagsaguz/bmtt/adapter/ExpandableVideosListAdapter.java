@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sagsaguz.bmtt.QAActivity;
@@ -107,6 +108,43 @@ public class ExpandableVideosListAdapter extends BaseExpandableListAdapter {
         TextView lblListHeader = convertView.findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
+
+        ImageView ivListHeader = convertView.findViewById(R.id.ivListHeader);
+
+        switch (headerTitle){
+            case "Introduction":
+                ivListHeader.setBackgroundResource(R.drawable.introduction);
+                //lblListHeader.setBackgroundResource(R.drawable.introduction);
+                break;
+            case "Montessori Orientation":
+                ivListHeader.setBackgroundResource(R.drawable.montessori_orientation);
+                //lblListHeader.setBackgroundResource(R.drawable.montessori_orientation);
+                break;
+            case "Introduction to Exercise of Practical Life":
+                ivListHeader.setBackgroundResource(R.drawable.introduction_to_epl);
+                //lblListHeader.setBackgroundResource(R.drawable.introduction_to_epl);
+                break;
+            case "Exercise of Practical Life Presentations":
+                ivListHeader.setBackgroundResource(R.drawable.class_management);
+                //lblListHeader.setBackgroundResource(R.drawable.class_management);
+                break;
+            case "Sensorial Introduction and Presentations":
+                ivListHeader.setBackgroundResource(R.drawable.sensorial_introductions_and_presentations);
+                //lblListHeader.setBackgroundResource(R.drawable.sensorial_introductions_and_presentations);
+                break;
+            case "Class Management":
+                ivListHeader.setBackgroundResource(R.drawable.epl_presentations);
+                //lblListHeader.setBackgroundResource(R.drawable.epl_presentations);
+                break;
+            case "Arithmetic":
+                ivListHeader.setBackgroundResource(R.drawable.arithmetic);
+                //lblListHeader.setBackgroundResource(R.drawable.arithmetic);
+                break;
+            case "Language":
+                ivListHeader.setBackgroundResource(R.drawable.language);
+                //lblListHeader.setBackgroundResource(R.drawable.language);
+                break;
+        }
 
         return convertView;
     }

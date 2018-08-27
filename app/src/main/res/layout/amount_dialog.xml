@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="@drawable/round_corners_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="5dp"
+        android:paddingBottom="@dimen/dimen_5dp"
+        android:background="@color/primary_blue"
+        android:id="@+id/llMonthYear">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JULY 2018"
+            android:textColor="@color/colorAccent"
+            android:textSize="28sp"
+            android:id="@+id/tvMonthYear"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/dimen_5dp"
+        android:layout_below="@id/llMonthYear">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today            : Rs. "
+            android:textSize="20sp"
+            android:textColor="@color/darkGrey"
+            android:id="@+id/tvToday"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Month           : Rs. "
+            android:textSize="20sp"
+            android:textColor="@color/darkGrey"
+            android:id="@+id/tvMonth"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Annual          : Rs. "
+            android:textSize="20sp"
+            android:textColor="@color/darkGrey"
+            android:id="@+id/tvYear"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today's admissions          : "
+            android:textSize="20sp"
+            android:textColor="@color/darkGrey"
+            android:id="@+id/tvTodayAdm"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This Month's admissions : "
+            android:textSize="20sp"
+            android:textColor="@color/darkGrey"
+            android:id="@+id/tvMonthAdm"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

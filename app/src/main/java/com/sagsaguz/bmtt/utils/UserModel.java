@@ -2,13 +2,13 @@ package com.sagsaguz.bmtt.utils;
 
 public class UserModel {
 
-    private String emailId, firstName, lastName, centre, address, phone, password, createdDate, expiryDate, dob, profilePic, notificationARN;
+    private String emailId, firstName, lastName, centre, address, phone, password, createdDate, expiryDate, dob, profilePic, notificationARN, userId;
     private Boolean bmttPart1, bmttPart2, bmttPart3;
 
     public UserModel() {
     }
 
-    public UserModel(String emailId, String firstName, String lastName,String centre, String address, String phone, String password, String createdDate, String expiryDate, String dob, Boolean bmttPart1, Boolean bmttPart2, Boolean bmttPart3, String profilePic, String notificationARN) {
+    public UserModel(String emailId, String firstName, String lastName,String centre, String address, String phone, String password, String createdDate, String expiryDate, String dob, Boolean bmttPart1, Boolean bmttPart2, Boolean bmttPart3, String profilePic, String notificationARN, String userId) {
         this.emailId = emailId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,6 +24,7 @@ public class UserModel {
         this.bmttPart3 = bmttPart3;
         this.profilePic = profilePic;
         this.notificationARN = notificationARN;
+        this.userId = userId;
     }
 
     public String getEmailId() {
@@ -144,5 +145,13 @@ public class UserModel {
 
     public void setNotificationARN(String notificationARN) {
         this.notificationARN = notificationARN;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

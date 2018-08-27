@@ -6,6 +6,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Click on topic to view videos"
+        android:textSize="14sp"
+        android:textColor="@color/darkGrey"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvTop"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="You are not enrolled in this course."
         android:textSize="18sp"
         android:layout_centerVertical="true"
@@ -22,6 +32,7 @@
         android:groupIndicator="@null"
         android:childDivider="@android:color/transparent"
         android:divider="@android:color/transparent"
+        android:layout_below="@id/tvTop"
         android:id="@+id/expFragment"/>
 
 </RelativeLayout>

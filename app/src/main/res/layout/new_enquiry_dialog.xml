@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/grey"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Enquiry"
+        android:textColor="@color/silver"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvTitle"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/tvTitle"
+        android:background="@color/colorPrimary"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/rlDetails">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:hint="Name"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border"
+            android:id="@+id/etName"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etName"
+            android:hint="Mobile number"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:inputType="phone"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border"
+            android:id="@+id/etPhone"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etPhone"
+            android:hint="Email address"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border"
+            android:id="@+id/etEmail"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etEmail"
+            android:hint="Location"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:inputType="text"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border"
+            android:id="@+id/etLocation"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:textColorHint="@color/textColor"
+            android:inputType="textLongMessage"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/grey"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/border"
+            android:layout_below="@+id/etLocation"
+            android:overlapAnchor="false"
+            android:id="@+id/centreSpinner"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/rlDetails"
+        android:text="Add"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/btnAdd"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rlDetails"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/btnCancel"/>
+
+</RelativeLayout>

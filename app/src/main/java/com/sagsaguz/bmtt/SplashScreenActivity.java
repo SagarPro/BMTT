@@ -57,7 +57,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         if (login.equals("login")){
             assert userType != null;
             if (userType.equals("user")){
-                startActivity(new Intent(getBaseContext(), HomePageActivity.class));
+                startActivity(new Intent(getBaseContext(), IntroActivity.class));
             } else {
                 startActivity(new Intent(getBaseContext(), MainBranchActivity.class));
             }

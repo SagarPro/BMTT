@@ -29,6 +29,9 @@ public class BmttUsersDO {
     private String _password;
     private String _profilePic;
     private String _notificationARN;
+    private String _userId;
+    private Boolean _docSubmission;
+    private String _admissionDone;
 
     @DynamoDBHashKey(attributeName = "emailId")
     @DynamoDBAttribute(attributeName = "emailId")
@@ -151,5 +154,29 @@ public class BmttUsersDO {
 
     public void setNotificationARN(final String _notificationARN) {
         this._notificationARN = _notificationARN;
+    }
+    @DynamoDBAttribute(attributeName = "userId")
+    public String getUserId() {
+        return _userId;
+    }
+
+    public void setUserId(final String _userId) {
+        this._userId = _userId;
+    }
+    @DynamoDBAttribute(attributeName = "docSubmission")
+    public Boolean getDocSubmission() {
+        return _docSubmission;
+    }
+
+    public void setDocSubmission(final Boolean _docSubmission) {
+        this._docSubmission = _docSubmission;
+    }
+    @DynamoDBAttribute(attributeName = "admissionDone")
+    public String getAdmissionDone() {
+        return _admissionDone;
+    }
+
+    public void setAdmissionDone(final String _admissionDone) {
+        this._admissionDone = _admissionDone;
     }
 }

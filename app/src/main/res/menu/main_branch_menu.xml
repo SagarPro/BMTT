@@ -15,4 +15,11 @@
         android:icon="@drawable/icon_show_centres"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/admissions"
+        android:title="Admissions"
+        android:icon="@drawable/icon_show_centres"
+        app:showAsAction="collapseActionView"
+        android:visible="false"/>
+
 </menu>

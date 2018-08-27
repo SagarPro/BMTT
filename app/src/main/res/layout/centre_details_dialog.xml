@@ -56,6 +56,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvCName"
+            android:text="Centre Code :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/cCode"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cCode"
+            android:text=""
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorAccent"
+            android:id="@+id/tvCCode"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCCode"
             android:text="Centre Email Address :"
             android:textSize="14sp"
             android:textColor="@color/colorAccent"
@@ -117,8 +140,31 @@
             android:textColor="@color/grey"
             android:padding="8dp"
             android:maxLines="1"
+            android:layout_marginBottom="5dp"
             android:background="@color/colorAccent"
             android:id="@+id/etCPassword"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etCPassword"
+            android:text="Centre Location :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/location"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/location"
+            android:text=""
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:background="@color/colorAccent"
+            android:id="@+id/etCLocation"/>
 
     </RelativeLayout>
 
@@ -163,7 +209,6 @@
         android:layout_below="@id/rlDetails"
         android:layout_centerHorizontal="true"
         android:background="@color/colorPrimaryDark"
-        android:visibility="gone"
         android:id="@+id/btnCDelete" />
 
 </RelativeLayout>

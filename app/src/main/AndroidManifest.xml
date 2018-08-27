@@ -9,24 +9,21 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.google.android.c2dm.permission.REGISTER" />
     <uses-permission android:name="com.sagsaguz.bmtt.permission.C2D_MESSAGE" />
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/bmtt_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/bmtt_logo_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity android:name=".MainActivity" />
         <activity
             android:name=".HomePageActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".VideoViewActivity"
             android:screenOrientation="landscape"
@@ -36,46 +33,50 @@
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
 
-        <activity android:name=".UploadFilesActivity"
+        <activity
+            android:name=".UploadFilesActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".AddUserActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainBranchActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
-        <activity android:name=".QAActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".QAActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UserDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".MCQActivity"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait" />
-        <activity android:name=".TestActivity"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MCQActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".TestActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".MilestoneActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".PracticalResultsActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".NotificationActivity"
             android:screenOrientation="portrait" />
+
         <service
             android:name=".notification.MyFirebaseInstanceIDService"
             android:enabled="true" />
@@ -96,6 +97,7 @@
                 <category android:name="com.amazonaws.androidtest" />
             </intent-filter>
         </service>
+
         <receiver
             android:name=".notification.ExternalReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
@@ -107,15 +109,42 @@
                 <category android:name="com.sagsaguz.bmtt" />
             </intent-filter>
         </receiver>
-        <activity android:name=".SplashScreenActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+
+        <activity
+            android:name=".SplashScreenActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".WebinarActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".AttachmentsActivity" />
+        <activity
+            android:name=".IntroActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"/>
+        <activity android:name=".ActivitiesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".AdmissionEnquiriesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".GuidelinesActivity" />
+        <activity
+            android:name=".EnquiryDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

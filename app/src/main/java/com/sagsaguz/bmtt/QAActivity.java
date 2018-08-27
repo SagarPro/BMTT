@@ -73,9 +73,8 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
     private static FloatingActionButton fb_askQuestion;
     private static ExpandableListAdapter listAdapter;
 
-    private RelativeLayout rlQA;
+    private RelativeLayout rlQA, rlQABottom;
 
-    private AWSProvider awsProvider;
     private static AmazonDynamoDBClient dynamoDBClient;
     private static DynamoDBMapper dynamoDBMapper;
 
@@ -102,16 +101,9 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qa_layout);
 
-        Intent intent = getIntent();
-        userType = intent.getStringExtra("USERTYPE");
-        if(userType.equals("user")){
-            email = intent.getStringExtra("EMAIL");
-            name = intent.getStringExtra("NAME");
-        }
-
         qaActivity = QAActivity.this;
 
-        awsProvider = new AWSProvider();
+        AWSProvider awsProvider = new AWSProvider();
         dynamoDBClient = new AmazonDynamoDBClient(awsProvider.getCredentialsProvider(getBaseContext()));
         dynamoDBClient.setRegion(Region.getRegion(Regions.US_EAST_1));
         dynamoDBMapper = DynamoDBMapper.builder()
@@ -120,13 +112,11 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
                 .build();
 
         rlQA = findViewById(R.id.rlQA);
+        rlQABottom = findViewById(R.id.rlQABottom);
 
         expLv = findViewById(R.id.expLv);
 
         etQASearch = findViewById(R.id.etQASearch);
-
-        listAdapter = new ExpandableListAdapter(QAActivity.this, userType, listDataHeader, listSubHeader, listDataChild);
-        expLv.setAdapter(listAdapter);
 
         pbPrepareQA = findViewById(R.id.pbPrepareQA);
         pbPrepareQA.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.green), android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -138,9 +128,30 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
 
         context = QAActivity.this;
 
-        new PrepareQA().execute();
+        Intent intent = getIntent();
+        userType = intent.getStringExtra("USERTYPE");
+        if(userType.equals("user")){
+            email = intent.getStringExtra("EMAIL");
+            name = intent.getStringExtra("NAME");
+            new PrepareUnansweredQA().execute();
+        } else {
+            new PrepareQA().execute();
+        }
+
+        listAdapter = new ExpandableListAdapter(QAActivity.this, userType, listDataHeader, listSubHeader, listDataChild);
+        expLv.setAdapter(listAdapter);
 
         expLv.setOnItemLongClickListener(this);
+
+        expLv.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            int previousItem = -1;
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                if(groupPosition != previousItem)
+                    expLv.collapseGroup(previousItem);
+                previousItem = groupPosition;
+            }
+        });
 
         /*expLv.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -322,10 +333,12 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
         if(userType.equals("admin")){
             unansweredQuestions.setVisible(true);
             fb_askQuestion.setVisibility(View.GONE);
-            expLv.setOnItemLongClickListener(null);
+            //expLv.setOnItemLongClickListener(null);
         } else {
-            expLv.setOnItemLongClickListener(null);
-            userQuestions.setVisible(true);
+            //expLv.setOnItemLongClickListener(null);
+            userQuestions.setVisible(false);
+            allQuestions.setVisible(false);
+            unansweredQuestions.setVisible(false);
             fb_askQuestion.setVisibility(View.VISIBLE);
         }
     }
@@ -334,11 +347,11 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
         if(menuType.equals("unselected")){
             checkUserType();
         } else {
-            if(userType.equals("admin")){
+            /*if(userType.equals("admin")){
                 expLv.setOnItemLongClickListener(null);
             } else {
                 expLv.setOnItemLongClickListener((AdapterView.OnItemLongClickListener) context);
-            }
+            }*/
             unansweredQuestions.setVisible(false);
             userQuestions.setVisible(false);
         }
@@ -366,7 +379,7 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
             menuType = "selected";
             //checkUserType();
             unansweredQuestions.setVisible(false);
-            etQASearch.setVisibility(View.GONE);
+            rlQABottom.setVisibility(View.GONE);
             new PrepareUnansweredQA().execute();
             return true;
         }
@@ -375,7 +388,7 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
             questionType = "unanswered";
             menuType = "selected";
             userQuestions.setVisible(false);
-            etQASearch.setVisibility(View.GONE);
+            rlQABottom.setVisibility(View.GONE);
             new PrepareUnansweredQA().execute();
             return true;
         }
@@ -384,7 +397,7 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
             questionType = "answered";
             menuType = "unselected";
             checkQuestionType();
-            etQASearch.setVisibility(View.VISIBLE);
+            rlQABottom.setVisibility(View.VISIBLE);
             new PrepareQA().execute();
             return true;
         }
@@ -403,7 +416,6 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
         if (itemType == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
             onGroupLongClick(groupPosition);
         }
-
         return true;
     }
 
@@ -473,7 +485,11 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
             if(result) {
                 Collections.sort(listDataHeader, String.CASE_INSENSITIVE_ORDER);
                 listAdapter.notifyDataSetChanged();
-                unansweredQuestions.setIcon(buildCounterDrawable(i, R.drawable.icon_user_questions));
+                filterListDataHeader.clear();
+                filterListDataHeader.addAll(listDataHeader);
+                if(!userType.equals("user")){
+                    unansweredQuestions.setIcon(buildCounterDrawable(i, R.drawable.icon_user_questions));
+                }
                 checkMenuType();
                 checkQuestionType();
             }
@@ -589,7 +605,11 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
             if(itemsCount < integer){
                 qaActivity.basicSnackBar("Successfully posted your question");
                 if(questionType.equals("answered")){
-                    new PrepareQA().execute();
+                    if(userType.equals("admin")){
+                        new PrepareQA().execute();
+                    } else {
+                        new PrepareUnansweredQA().execute();
+                    }
                 } else {
                     new PrepareUnansweredQA().execute();
                 }
@@ -598,7 +618,7 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
     }
 
 
-    private static class DeleteQuestion extends AsyncTask<Integer, Void, Integer>{
+    private static class DeleteQuestion extends AsyncTask<Integer, Void, Boolean>{
 
         @Override
         protected void onPreExecute() {
@@ -607,9 +627,35 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
         }
 
         @Override
-        protected Integer doInBackground(Integer... integers) {
+        protected Boolean doInBackground(Integer... integers) {
 
             try {
+                QADetailsDO qaDetailsDOItem = new QADetailsDO();
+                qaDetailsDOItem.setQuestion(listDataHeader.get(integers[0]));
+                DynamoDBQueryExpression<QADetailsDO> queryExpression = new DynamoDBQueryExpression<QADetailsDO>()
+                        .withHashKeyValues(qaDetailsDOItem)
+                        .withConsistentRead(false);
+                PaginatedQueryList result = dynamoDBMapper.query(QADetailsDO.class, queryExpression);
+
+                Gson gson = new Gson();
+                for (int i = 0; i < result.size(); i++) {
+                    String jsonFormOfItem = gson.toJson(result.get(i));
+                    try {
+                        JSONObject resultObject = new JSONObject(jsonFormOfItem);
+                        qaDetailsDOItem.setUser(resultObject.getString("_user"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        return false;
+                    }
+                }
+                dynamoDBMapper.delete(qaDetailsDOItem);
+                return true;
+            } catch (AmazonClientException e){
+                qaActivity.showSnackBar("Network connection error!!", "update");
+                return false;
+            }
+
+            /*try {
                 ScanRequest request = new ScanRequest().withTableName(Config.QATABLENAME);
                 ScanResult response = dynamoDBClient.scan(request);
                 itemsCount = response.getCount();
@@ -628,16 +674,20 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
             } catch (AmazonClientException e){
                 qaActivity.showSnackBar("Network connection error!!", "delete");
                 return itemsCount;
-            }
+            }*/
         }
 
         @Override
-        protected void onPostExecute(Integer integer) {
+        protected void onPostExecute(Boolean result) {
             qaActivity.progressDialog.dismiss();
             dialog.dismiss();
-            if(itemsCount > integer){
+            if(result){
                 if(questionType.equals("answered")){
-                    new PrepareQA().execute();
+                    if(userType.equals("admin")){
+                        new PrepareQA().execute();
+                    } else {
+                        new PrepareUnansweredQA().execute();
+                    }
                 } else {
                     new PrepareUnansweredQA().execute();
                 }
@@ -701,7 +751,11 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
             qaActivity.progressDialog.dismiss();
             if(result) {
                 if (questionType.equals("answered")) {
-                    new PrepareQA().execute();
+                    if(userType.equals("admin")){
+                        new PrepareQA().execute();
+                    } else {
+                        new PrepareUnansweredQA().execute();
+                    }
                 } else {
                     new PrepareUnansweredQA().execute();
                 }
@@ -727,15 +781,16 @@ public class QAActivity extends AppCompatActivity implements AdapterView.OnItemL
             question = strings[0];
             date = strings[1];
             try {
-                bmttAdminsDO = dynamoDBMapper.load(BmttAdminsDO.class, "superadmin@brightkidmont.com", "777");
+                bmttAdminsDO = dynamoDBMapper.load(BmttAdminsDO.class, Config.SUPERADMIN, Config.SAPHONE);
 
                 AWSCredentials awsCredentials = new BasicAWSCredentials(Config.ACCESSKEY, Config.SECRETKEY);
                 AmazonSNSClient snsClient = new AmazonSNSClient(awsCredentials);
 
+                String notificationArn = bmttAdminsDO.getNotificationARN();
                 PublishRequest publishRequest = new PublishRequest();
-                publishRequest.setMessage(name + " asked a question.");
+                publishRequest.setMessage(7 + notificationArn + "$" +name + " asked a question.");
                 publishRequest.setSubject("BMTT Notification");
-                publishRequest.withTargetArn(bmttAdminsDO.getNotificationARN());
+                publishRequest.withTargetArn(notificationArn);
                 snsClient.publish(publishRequest);
 
                 return true;

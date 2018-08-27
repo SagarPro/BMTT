@@ -116,6 +116,48 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:src="@drawable/icon_webinar"
+                android:padding="12dp"
+                android:layout_weight="1"
+                android:id="@+id/ivWebinar"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/slightWhite"
+                android:id="@+id/view4"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/icon_bill"
+                android:padding="12dp"
+                android:layout_weight="1"
+                android:id="@+id/ivBill"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/slightWhite"
+                android:id="@+id/view5"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/icon_attachment"
+                android:padding="12dp"
+                android:layout_weight="1"
+                android:id="@+id/ivAttachment"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/slightWhite"
+                android:id="@+id/view6"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:src="@drawable/icon_bell"
                 android:padding="10dp"
                 android:layout_weight="1"

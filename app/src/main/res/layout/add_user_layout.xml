@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rlAddUser"
@@ -22,7 +23,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create New User"
+        android:text="Student Registration"
         android:textSize="26sp"
         android:textColor="@color/colorAccent"
         android:layout_centerHorizontal="true"
@@ -115,14 +116,13 @@
                     android:layout_below="@+id/etFirstName"
                     android:id="@+id/etLastName"/>
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Date of birth *"
                     android:textColorHint="@color/textColor"
                     android:textColor="@color/grey"
                     android:textCursorDrawable="@null"
-                    android:inputType="date"
                     android:textSize="18sp"
                     android:maxLines="1"
                     android:padding="10dp"
@@ -163,7 +163,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Phone *"
+                    android:hint="Phone * (cannot change)"
                     android:textColorHint="@color/textColor"
                     android:inputType="phone"
                     android:textCursorDrawable="@null"
@@ -214,6 +214,7 @@
                     android:orientation="vertical"
                     android:layout_marginBottom="10dp"
                     android:layout_below="@+id/etPassword"
+                    android:visibility="gone"
                     android:id="@+id/enrollUser">
 
                     <TextView
@@ -252,9 +253,257 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/enrollUser"
                     android:orientation="vertical"
                     android:layout_marginBottom="10dp"
-                    android:layout_below="@+id/enrollUser"
+                    android:id="@+id/installments">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Installments"
+                        android:textSize="18sp"
+                        android:textColor="@color/darkGrey"
+                        android:layout_marginBottom="5dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rl_installment1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="1"
+                            android:layout_toStartOf="@+id/sub_installment1">
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:hint="eg: 5,000"
+                                android:textColorHint="@color/textColor"
+                                android:inputType="number"
+                                android:textCursorDrawable="@null"
+                                android:textColor="@color/grey"
+                                android:textSize="18sp"
+                                android:maxLines="1"
+                                android:maxLength="5"
+                                android:padding="10dp"
+                                android:layout_marginEnd="2dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/border"
+                                android:layout_weight="1"
+                                android:id="@+id/installment1"/>
+
+                        </LinearLayout>
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:backgroundTint="@color/colorPrimary"
+                            android:layout_marginStart="3dp"
+                            android:layout_marginBottom="5dp"
+                            android:elevation="5dp"
+                            android:padding="20dp"
+                            app:fabSize="mini"
+                            android:src="@drawable/icon_sub"
+                            android:visibility="invisible"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            android:id="@+id/sub_installment1"/>
+
+                    </RelativeLayout>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:backgroundTint="@color/colorPrimary"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="5dp"
+                        android:padding="20dp"
+                        app:fabSize="mini"
+                        android:src="@drawable/icon_add"
+                        android:id="@+id/add_installment1"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rl_installment2">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:background="@drawable/border"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toStartOf="@+id/sub_installment2">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Date"
+                                android:textColorHint="@color/textColor"
+                                android:textCursorDrawable="@null"
+                                android:textColor="@color/grey"
+                                android:textSize="15sp"
+                                android:maxLines="1"
+                                android:padding="10dp"
+                                android:layout_marginEnd="2dp"
+                                android:layout_weight="1"
+                                android:id="@+id/date2"/>
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:hint="eg: 5,000"
+                                android:textColorHint="@color/textColor"
+                                android:inputType="number"
+                                android:textCursorDrawable="@null"
+                                android:textColor="@color/grey"
+                                android:textSize="18sp"
+                                android:maxLines="1"
+                                android:maxLength="5"
+                                android:padding="10dp"
+                                android:background="@drawable/border"
+                                android:layout_weight="1"
+                                android:id="@+id/installment2"/>
+
+                        </LinearLayout>
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:backgroundTint="@color/colorPrimary"
+                            android:layout_marginStart="3dp"
+                            android:layout_marginBottom="5dp"
+                            android:elevation="5dp"
+                            android:padding="20dp"
+                            app:fabSize="mini"
+                            android:src="@drawable/icon_sub"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            android:id="@+id/sub_installment2"/>
+
+                    </RelativeLayout>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:backgroundTint="@color/colorPrimary"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:elevation="5dp"
+                        android:padding="20dp"
+                        app:fabSize="mini"
+                        android:src="@drawable/icon_add"
+                        android:id="@+id/add_installment2"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rl_installment3">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:background="@drawable/border"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toStartOf="@+id/sub_installment3">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Date"
+                                android:textColorHint="@color/textColor"
+                                android:textCursorDrawable="@null"
+                                android:textColor="@color/grey"
+                                android:textSize="15sp"
+                                android:maxLines="1"
+                                android:padding="10dp"
+                                android:layout_marginEnd="2dp"
+                                android:layout_weight="1"
+                                android:id="@+id/date3"/>
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:hint="eg: 5,000"
+                                android:textColorHint="@color/textColor"
+                                android:inputType="number"
+                                android:textCursorDrawable="@null"
+                                android:textColor="@color/grey"
+                                android:textSize="18sp"
+                                android:maxLines="1"
+                                android:maxLength="5"
+                                android:padding="10dp"
+                                android:background="@drawable/border"
+                                android:layout_weight="1"
+                                android:id="@+id/installment3"/>
+
+                        </LinearLayout>
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:backgroundTint="@color/colorPrimary"
+                            android:layout_marginStart="3dp"
+                            android:layout_marginBottom="5dp"
+                            android:elevation="5dp"
+                            android:padding="20dp"
+                            app:fabSize="mini"
+                            android:src="@drawable/icon_sub"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            android:id="@+id/sub_installment3"/>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginEnd="35dp"
+                        android:layout_marginTop="5dp"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="Total : "
+                            android:textSize="20sp"
+                            android:gravity="center"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColorHint="@color/textColor"
+                            android:textColor="@color/grey"
+                            android:textCursorDrawable="@null"
+                            android:textSize="18sp"
+                            android:maxLines="1"
+                            android:maxLength="5"
+                            android:padding="10dp"
+                            android:background="@drawable/border"
+                            android:layout_weight="1"
+                            android:id="@+id/tvTotal"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@+id/installments"
                     android:id="@+id/expiryDate">
 
                     <TextView
@@ -264,14 +513,13 @@
                         android:textSize="18sp"
                         android:padding="5dp"/>
 
-                    <EditText
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="MMM DD, YYYY"
                         android:textColorHint="@color/textColor"
                         android:textColor="@color/grey"
                         android:textCursorDrawable="@null"
-                        android:inputType="date"
                         android:textSize="18sp"
                         android:maxLines="1"
                         android:padding="10dp"

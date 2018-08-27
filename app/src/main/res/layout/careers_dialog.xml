@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/orange"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Career Request Form"
+        android:textColor="@color/silver"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tvTitle"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/tvTitle"
+        android:background="@color/colorPrimary"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/rlDetails">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/name"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:hint="Enter your name"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorAccent"
+            android:id="@+id/etName"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etName"
+            android:text="Phone :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/phone"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phone"
+            android:hint="Enter your mobile number"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:inputType="phone"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorAccent"
+            android:id="@+id/etPhone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etPhone"
+            android:text="Email Address :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/email"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/email"
+            android:hint="Enter your email address"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorAccent"
+            android:id="@+id/etEmail"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etEmail"
+            android:text="Preferred work location :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/location"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/location"
+            android:hint="work location"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:inputType="text"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:background="@color/colorAccent"
+            android:id="@+id/etLocation"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/rlDetails"
+        android:text="Submit"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/btnSubmit"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rlDetails"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/btnCancel"/>
+
+</RelativeLayout>

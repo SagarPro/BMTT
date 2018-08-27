@@ -346,7 +346,7 @@ public class MilestoneActivity extends AppCompatActivity {
             graphView.getGridLabelRenderer().setVerticalLabelsColor(graphAxisColor);
             StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
             staticLabelsFormatter.setHorizontalLabels(xAxis);
-            staticLabelsFormatter.setVerticalLabels(new String[]{"0", "1", "2", "3", "4", "5"});
+            staticLabelsFormatter.setVerticalLabels(new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"});
             graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
             /*graphView.getViewport().setScrollable(true);
             graphView.getViewport().setScalableY(true);*/

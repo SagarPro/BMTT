@@ -13,6 +13,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -47,6 +50,7 @@ public class MessageReceivingService extends Service{
 
     protected static void saveToLog(Bundle extras, Context context){
         String message = "Notification";
+        int category = 0;
         if(extras!=null){
             for(String key: extras.keySet()){
                 if(key.equals("default") || key.equals("gcm.notification.body")) {
@@ -56,7 +60,12 @@ public class MessageReceivingService extends Service{
         }
         String receivingARN = "null";
         if (message!= null && message.contains("$")) {
-            receivingARN = message.substring(0, message.indexOf("$"));
+            try {
+                category = Integer.parseInt(message.substring(0,1));
+            } catch (NumberFormatException e){
+                category = 0;
+            }
+            receivingARN = message.substring(1, message.indexOf("$"));
             message = message.substring(message.indexOf("$") + 1);
         }
         SharedPreferences userPref = context.getSharedPreferences("USERDETAILS", MODE_PRIVATE);
@@ -77,11 +86,11 @@ public class MessageReceivingService extends Service{
                 editor.putBoolean("NINDICATOR", true);
                 editor.apply();
             }
-            postNotification(new Intent(context, SplashScreenActivity.class), context, message);
+            postNotification(new Intent(context, SplashScreenActivity.class), context, message, category);
         }
     }
 
-    protected static void postNotification(Intent intentAction, Context context, String message){
+    protected static void postNotification(Intent intentAction, Context context, String message, int category){
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -90,6 +99,30 @@ public class MessageReceivingService extends Service{
 
         String id = "bmtt_notification";
         CharSequence name = "BMTT";
+        String subject = "Notification";
+
+        switch (category){
+            case 0: subject = "Notification";
+                break;
+            case 1: subject = "Approved as a BMTT Student. Access granted to TERM 1, part-1";
+                break;
+            case 2: subject = "Access granted to TERM 1, part-1 & part-2";
+                break;
+            case 3: subject = "Access granted to TERM 1, part-1 & part-2 and TERM 2";
+                break;
+            case 4: subject = "Access restricted to BMTT course";
+                break;
+            case 5: subject = "Successfully received all of your documents";
+                break;
+            case 6: subject = "Amount paid";
+                break;
+            case 7: subject = "New Question";
+                break;
+            case 8: subject = "Pending fees reminder";
+                break;
+            case 9: subject = "Bmtt Webinar";
+                break;
+        }
 
         int importance = 0;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -110,7 +143,24 @@ public class MessageReceivingService extends Service{
                 mNotificationManager.createNotificationChannel(mChannel);
             }
 
-            RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.custom_notification);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+            builder.setContentIntent(pendingIntent).setSmallIcon(R.drawable.icon_bell).setTicker(name).setWhen(0)
+                    .setAutoCancel(true).setContentTitle(subject)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                    .setContentText(message);
+            if (isAppIsInBackground(context)){
+                builder.setContentIntent(pendingIntent);
+            }
+
+            Notification notification = builder.build();
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            notification.defaults |= Notification.DEFAULT_SOUND;
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
+            if (mNotificationManager != null) {
+                mNotificationManager.notify(R.string.notification_number, notification);
+            }
+
+            /*RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.custom_notification);
             contentView.setImageViewResource(R.id.ivNotificationIcon, R.drawable.star_circle);
             contentView.setTextViewText(R.id.tvNotificationTitle, "BMTT");
             contentView.setTextViewText(R.id.tvNotificationMessage, message);
@@ -129,11 +179,28 @@ public class MessageReceivingService extends Service{
             notification.defaults |= Notification.DEFAULT_VIBRATE;
             if (mNotificationManager != null) {
                 mNotificationManager.notify(R.string.notification_number, notification);
-            }
+            }*/
 
         } else {
 
-            RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.custom_notification);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+            builder.setSmallIcon(R.drawable.icon_bell).setTicker(name).setWhen(0)
+                    .setAutoCancel(true).setContentTitle(subject)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                    .setContentText(message);
+            if (isAppIsInBackground(context)){
+                builder.setContentIntent(pendingIntent);
+            }
+
+            Notification notification = builder.build();
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            notification.defaults |= Notification.DEFAULT_SOUND;
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
+            if (mNotificationManager != null) {
+                mNotificationManager.notify(R.string.notification_number, notification);
+            }
+
+            /*RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.custom_notification);
             contentView.setImageViewResource(R.id.ivNotificationIcon, R.drawable.star_circle);
             contentView.setTextViewText(R.id.tvNotificationTitle, "BMTT");
             contentView.setTextViewText(R.id.tvNotificationMessage, message);
@@ -151,7 +218,7 @@ public class MessageReceivingService extends Service{
             notification.defaults |= Notification.DEFAULT_VIBRATE;
             if (mNotificationManager != null) {
                 mNotificationManager.notify(R.string.notification_number, notification);
-            }
+            }*/
 
         }
 

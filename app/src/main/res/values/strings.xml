@@ -16,4 +16,193 @@
     <string name="preferences">PreferencesFile</string>
     <string name="notification_number">1337</string>
 
+    <string name="login_message">Greetings from Bright Montessori Teachers Training !!!\n\nGetting trained in Bright Montessori Teacher Training (B.M.T.T.) not only provides you the opportunity to enrich yourself with a deep understanding of Montessori methodology but also prepares you as a confident teacher through our various teaching and communications tips and guidance provided through our course in our lecture videos. Online theory classes and practice classes in the nearby Bright Kid and other authorised centers have made this program very convenient and sought after for our students. Our goal is to prepare you best in your Montessori teaching career and set you up for success in your professional life.\n\nBMTT app can be downloaded from Play Store ( https://play.google.com/store/apps/details?id=com.sagsaguz.bmtt )</string>
+
+    <string name="course_syllabus">
+    \n1. Introduction of Montessori Methodology Part 1 - 6
+    \n\n2. Montessori Orientation
+    \n\n3. Introduction to Exercises of Practical Life Part 1 - 5
+    \n\n4. Exercises of Practical Life Presentation
+    \n\n5. Introduction to Sensorial Activities\nPart 1 and Part 2
+    \n\n6. Sensorial Presentations
+    \n\n7. Class Management
+    \n\n8. Arithmetic
+    \n\n9. Language</string>
+
+    <string name="course_guidelines_level_1">
+        <![CDATA[<b><font color=#e74c3c><br />1. Read Book: </font></b>]]> <![CDATA[<font color=#212121>Introduction of Montessori Methodology.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />2. Watch lecture videos: </font></b>]]> <![CDATA[<font color=#212121>Introduction of Montessori Methodology part-1 to part-6.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />3. Answer MCQs</font></b>]]>
+        <![CDATA[<font color=#212121><br />-------------------------</font>]]>
+
+        <![CDATA[<b><font color=#e74c3c><br /><br />1. Watch lecture videos: </font></b>]]> <![CDATA[<font color=#212121>Montessori Orientation.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />2. Answer MCQs</font></b>]]>
+        <![CDATA[<font color=#212121><br />-------------------------</font>]]>
+
+        <![CDATA[<b><font color=#e74c3c><br /><br />1. Read Book: </font></b>]]> <![CDATA[<font color=#212121>Introduction to Exercises of Practical Life.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />2. Watch lecture videos: </font></b>]]> <![CDATA[<font color=#212121>Introduction to Exercise of Practical Life part-1 to part-5.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />3. Answer MCQs</font></b>]]>
+        <![CDATA[<b><font color=#e74c3c><br />4. Practice Classes: </font></b>]]> <![CDATA[<font color=#212121>Attend Practice Classes in nearby BMTT centers.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />5. Create: </font></b>]]> <![CDATA[<font color=#212121>Exercise of Practical Life Presentation file.</font>]]>
+        <![CDATA[<font color=#212121><br />-------------------------</font>]]>
+
+        <![CDATA[<b><font color=#e74c3c><br /><br />1. Read Book: </font></b>]]> <![CDATA[<font color=#212121>Introduction to Sensorial Activities.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />2. Watch lecture videos: </font></b>]]> <![CDATA[<font color=#212121>Introduction to Sensorial Activities part-1 and part-2.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />3. Answer MCQs</font></b>]]>
+        <![CDATA[<b><font color=#e74c3c><br />4. Practice Classes: </font></b>]]> <![CDATA[<font color=#212121>Attend Practice Classes in nearby BMTT centers.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />5. Create: </font></b>]]> <![CDATA[<font color=#212121>Sensorial Presentation file.</font>]]>
+        <![CDATA[<font color=#212121><br />-------------------------</font>]]>
+
+        <![CDATA[<b><font color=#e74c3c><br /><br />Write Level -1 written assignment</font></b>]]>
+        <![CDATA[<b><font color=#e74c3c><br /><br />Appear for Mid –Term Examination for 50 marks, Duration - 90 mins<br />(20 marks - MCQ Questions<br/>30 marks - Descriptive Questions).<br /></font></b>]]>
+    </string>
+
+    <string name="course_guidelines_level_2">
+        <![CDATA[<b><font color=#e74c3c><br />1. Read Book: </font></b>]]> <![CDATA[<font color=#212121>Class Management.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />2. Watch lecture videos: </font></b>]]> <![CDATA[<font color=#212121>Class Management Modules.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />3. Answer MCQs</font></b>]]>
+        <![CDATA[<font color=#212121><br />-------------------------</font>]]>
+
+        <![CDATA[<b><font color=#e74c3c><br /><br />1. Read Book: </font></b>]]> <![CDATA[<font color=#212121>Arithmetic.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />2. Watch lecture videos: </font></b>]]> <![CDATA[<font color=#212121>Arithmetic.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />3. Answer MCQs</font></b>]]>
+        <![CDATA[<b><font color=#e74c3c><br />4. Practice Classes: </font></b>]]> <![CDATA[<font color=#212121>Attend Practice Classes in nearby BMTT centers.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />5. Create: </font></b>]]> <![CDATA[<font color=#212121>Arithmetic Presentation file.</font>]]>
+        <![CDATA[<font color=#212121><br />-------------------------</font>]]>
+
+        <![CDATA[<b><font color=#e74c3c><br /><br />1. Read Book: </font></b>]]> <![CDATA[<font color=#212121>Language.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />2. Watch lecture videos: </font></b>]]> <![CDATA[<font color=#212121>Language.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />3. Answer MCQs</font></b>]]>
+        <![CDATA[<b><font color=#e74c3c><br />4. Practice Classes: </font></b>]]> <![CDATA[<font color=#212121>Attend Practice Classes in nearby BMTT centers.</font>]]>
+        <![CDATA[<b><font color=#e74c3c><br />5. Create: </font></b>]]> <![CDATA[<font color=#212121>Language Presentation file.</font>]]>
+        <![CDATA[<font color=#212121><br />-------------------------</font>]]>
+
+        <![CDATA[<b><font color=#e74c3c><br /><br />Write Level -2 Written Assignments</font></b>]]>
+        <![CDATA[<b><font color=#e74c3c><br /><br />Submit 4 Presentation Files ( EPL, Sensorial, Arithmetic and Language )</font></b>]]>
+        <![CDATA[<b><font color=#e74c3c><br /><br />Appear for Final Theory Examination for 100 marks, Duration - 3 hrs<br />Final Practical Exam for 50 marks.</font></b>]]>
+        <![CDATA[<b><font color=#e74c3c><br /><br />Appear for Practical Examination.</font></b>]]>
+        <![CDATA[<b><font color=#e74c3c><br /><br />Certification: Certificate will be issued after 1 month<br /></font></b>]]>
+    </string>
+
+    <string-array name="epl">
+        <item>How to roll a mat</item>
+        <item>How to un-roll a mat</item>
+        <item>How to put down things</item>
+        <item>How to fold a napkin along medial</item>
+        <item>How to unfold a napkin along medial</item>
+        <item>Social behavior activity-How to greet</item>
+        <item>Social behavior activity-How to sneeze &amp; cough</item>
+        <item>How to close - Small Button frame</item>
+        <item>How to open - Small Button frame</item>
+        <item>How to wash hands</item>
+        <item>Pouring activity - Grains</item>
+        <item>Pouring activity – Liquid</item>
+        <item>How to carry sharp objects</item>
+        <item>Frame coat button – Closing</item>
+        <item>Frame coat button – Opening</item>
+        <item>Ribbon frame</item>
+        <item>Lace frame – ‘V’ pattern</item>
+        <item>How to fold napkin medial &amp; diagonal</item>
+        <item>Pouring water from glass to glass</item>
+        <item>How to offer – A Glass of water</item>
+        <item>Lace frame – ‘X’ pattern</item>
+        <item>Buckle frame</item>
+        <item>Walking on a line</item>
+    </string-array>
+
+    <string-array name="sensorial">
+        <item>Cylinder blocks</item>
+        <item>Pink towers</item>
+        <item>Brown stairs</item>
+        <item>Long stairs or Red rods</item>
+        <item>Color Tablets</item>
+        <item>Touch Board</item>
+        <item>Noise Boxes</item>
+        <item>Geometrical Cabinet</item>
+        <item>Tactile material – Fabrics</item>
+        <item>Colored cylinders</item>
+        <item>The Binomial cube</item>
+        <item>Constructive triangles</item>
+        <item>Geometrical solids</item>
+        <item>Stereognostic Bags</item>
+        <item>Smell bottles</item>
+        <item>Gustatory activity</item>
+        <item>Drawing insets</item>
+        <item>Geometrical Cards</item>
+        <item>Trinomial Cube</item>
+        <item>Decanomial Square</item>
+        <item>Baric Tablets</item>
+        <item>Thermic Slabs</item>
+        <item>Special name lessons</item>
+        <item>Comparative degree</item>
+        <item>Superlative degree</item>
+    </string-array>
+
+    <string-array name="arithmetic">
+        <item>Number rods</item>
+        <item>Sand paper figure / Numbers</item>
+        <item>Number cards &amp; rods</item>
+        <item>Spindle boxes</item>
+        <item>Zero activity</item>
+        <item>Chit game</item>
+        <item>Cards &amp; Counter</item>
+        <item>Seguin board – 1</item>
+        <item>Short bead chain</item>
+        <item>Decimal System – static / Bead material</item>
+        <item>Decimal system – Dynamic part material</item>
+        <item>Addition strip board</item>
+        <item>Subtraction strip board</item>
+        <item>Multiplication board</item>
+        <item>Division Board</item>
+        <item>Cards &amp; Counters – Even &amp; Odd</item>
+        <item>Decimal System – Static part card material</item>
+        <item>Dynamic part card material – Addition</item>
+        <item>Dynamic part card material – Subtraction</item>
+        <item>Seguin Board – II</item>
+        <item>Short Bead frame</item>
+        <item>Long Bead frame</item>
+        <item>Fraction – Equivalence</item>
+        <item>Fraction – Addition</item>
+        <item>Fraction – Subtraction</item>
+    </string-array>
+
+    <string-array name="language">
+        <item>Enrichment Vocabulary</item>
+        <item>Classified Pictures</item>
+        <item>Scenic Pictures</item>
+        <item>Planned Conversation</item>
+        <item>Preparatory Activity – Object Box</item>
+        <item>Preparatory Activity – Without Object Box</item>
+        <item>Sand paper letter</item>
+        <item>Group activity – oral phonetic analysis (last sound)</item>
+        <item>Group activity – oral phonetic analysis (first sound)</item>
+        <item>Group activity – oral phonetic analysis (first &amp; last sound)</item>
+        <item>Moveable alphabet</item>
+        <item>Picture series</item>
+        <item>Phonogram</item>
+        <item>Small moveable alphabet</item>
+        <item>Metathesis</item>
+        <item>Grammatical &amp; logical analysis (noun)</item>
+        <item>Grammatical &amp; logical analysis (verb)</item>
+        <item>Introduction –Subject</item>
+        <item>Introduction – Object</item>
+        <item>Transitive, Intransitive Verbs</item>
+        <item>Direct and Indirect Object</item>
+        <item>Introduction to Adjectives</item>
+        <item>Introduction to Preposition</item>
+        <item>Introduction to Conjunction</item>
+        <item>Introduction to Transposition</item>
+        <item>Hindi – Sand paper letters</item>
+    </string-array>
+
+    <string-array name="quotes">
+        <item>\"Children are human beings to whom respect is due, superior to us by reason of their innocence and of the greater possibilities of their future.\"</item>
+        <item>\"Early childhood education is the key to the betterment of society\"</item>
+        <item>\"Free the child's potential, and you will transform him into the world\"</item>
+        <item>\"Never help a child with a task at which he feels he can succeed\"</item>
+        <item>\"To aid life, leaving it free, however, that is the basic task of the educator\"</item>
+    </string-array>
+
+    <string name="maria_montessori">\"Children are human beings to whom respect is due, superior to us by reason of their innocence and of the greater possibilities of their future.\"</string>
+
 </resources>

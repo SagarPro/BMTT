@@ -2,6 +2,7 @@ package com.sagsaguz.bmtt;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -15,6 +16,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -131,9 +133,57 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
+        lvNotification.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (n.get(i).getMessage().contains("idiot")|| n.get(i).getMessage().contains("sangeetha") || n.get(i).getMessage().contains("Sangeetha")){
+                    Toast.makeText(NotificationActivity.this, "You cannot delete this...", Toast.LENGTH_LONG).show();
+                } else {
+                    deleteNotificationMsg(n.get(i));
+                }
+
+                return true;
+            }
+        });
+
+    }
+
+    private void deleteNotificationMsg(final NotificationsDO object){
+        final Dialog dialog = new Dialog(NotificationActivity.this);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setCancelable(true);
+
+        TextView tvTitle = dialog.findViewById(R.id.tvTitle);
+        tvTitle.setText("Deletion");
+        TextView tvMessage = dialog.findViewById(R.id.tvMessage);
+        tvMessage.setText("Are you sure, you want to delete");
+        Button btnDelete = dialog.findViewById(R.id.btnRemove);
+        btnDelete.setText("Delete");
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new DeleteNotification().execute(object);
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     private void showNotifications(List<NotificationsDO> notificationsDOList){
+        Collections.sort(n, new DateComparator());
+        Collections.reverse(n);
         notificationsM.clear();
         notificationsDT.clear();
         if(notificationsDOList.size() == 0){
@@ -142,26 +192,28 @@ public class NotificationActivity extends AppCompatActivity {
             for (NotificationsDO some : notificationsDOList) {
                 if(userType.equals("user")) {
                     fb_sendNotification.setVisibility(View.GONE);
+                    lvNotification.setOnItemLongClickListener(null);
                     if(some.getWho().contains(email)){
-                        notificationsDT.add(some.getWhen());
-                        notificationsM.put(some.getWhen(), some.getMessage());
+                        String dateTime = "by "+some.getCentre() + ", "+some.getWhen();
+                        notificationsDT.add(dateTime);
+                        notificationsM.put(dateTime, some.getMessage());
                     }
                 } else if (userType.equals("admin")){
                     fb_sendNotification.setVisibility(View.VISIBLE);
-                    if (!some.getCentre().equals("All users")) {
-                        notificationsDT.add(some.getWhen());
-                        notificationsM.put(some.getWhen(), some.getMessage());
+                    if (some.getCentre().equals(centre)) {
+                        String dateTime = "by "+some.getCentre() + ", "+some.getWhen();
+                        notificationsDT.add(dateTime);
+                        notificationsM.put(dateTime, some.getMessage());
                     }
                 } else {
                     fb_sendNotification.setVisibility(View.VISIBLE);
-                    if (some.getCentre().equals("All users")) {
-                        notificationsDT.add(some.getWhen());
-                        notificationsM.put(some.getWhen(), some.getMessage());
-                    }
+                    String dateTime = "by "+some.getCentre() + ", "+some.getWhen();
+                    notificationsDT.add(dateTime);
+                    notificationsM.put(dateTime, some.getMessage());
                 }
             }
-            Collections.sort(notificationsDT, new StringDateComparator());
-            Collections.reverse(notificationsDT);
+            /*Collections.sort(notificationsDT, new StringDateComparator());
+            Collections.reverse(notificationsDT);*/
             adapter.notifyDataSetChanged();
             lvNotification.smoothScrollToPosition(0);
         }
@@ -247,8 +299,8 @@ public class NotificationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!TextUtils.isEmpty(etMessage.getText().toString())) {
                     if (!TextUtils.isEmpty(tvTo.getText().toString()) && !tvTo.getText().toString().equals("Click here")) {
-                        new SendNotifications().execute(etMessage.getText().toString());
-                        //new StoreNotifications(dynamoDBMapper).execute(centre, etMessage.getText().toString());
+                        //new SendNotifications().execute(etMessage.getText().toString());
+                        new StoreNotifications(dynamoDBMapper).execute(centre, etMessage.getText().toString());
                     } else {
                         basicSnackBar("Select user");
                     }
@@ -323,7 +375,7 @@ public class NotificationActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(String... strings) {
             try {
-                if(!notificationActivity.userType.equals("SuperAdmin")) {
+                /*if(!notificationActivity.userType.equals("SuperAdmin")) {
                     notificationsDO.setCentre(strings[0]);
                     queryExpression = new DynamoDBQueryExpression<NotificationsDO>()
                             .withHashKeyValues(notificationsDO)
@@ -336,8 +388,8 @@ public class NotificationActivity extends AppCompatActivity {
                         notificationsDO = gson.fromJson(jsonFormOfItem, NotificationsDO.class);
                         notificationActivity.n.add(notificationsDO);
                     }
-                }
-                notificationsDO2.setCentre("All users");
+                }*/
+                /*notificationsDO2.setCentre("All users");
                 queryExpression = new DynamoDBQueryExpression<NotificationsDO>()
                         .withHashKeyValues(notificationsDO2)
                         .withConsistentRead(false);
@@ -348,6 +400,34 @@ public class NotificationActivity extends AppCompatActivity {
                     String jsonFormOfItem = gson.toJson(result.get(i));
                     notificationsDO2 = gson.fromJson(jsonFormOfItem,NotificationsDO.class);
                     notificationActivity.n.add(notificationsDO2);
+                }*/
+
+                ScanRequest request1 = new ScanRequest().withTableName(Config.NOTIFICATIONTABLENAME);
+                ScanResult response1 = notificationActivity.dynamoDBClient.scan(request1);
+                List<Map<String, AttributeValue>> uRows = response1.getItems();
+                for (Map<String, AttributeValue> map : uRows) {
+
+                    NotificationsDO nn = new NotificationsDO();
+                    nn.setCentre(map.get("centre").getS());
+                    nn.setWhen(map.get("when").getS());
+                    nn.setMessage(map.get("message").getS());
+                    List<AttributeValue> users = new ArrayList<>();
+                    users.addAll(map.get("who").getL());
+                    List<String> usersList = new ArrayList<>();
+                    for (int i =0; i<users.size(); i++){
+                        usersList.add(users.get(i).getS());
+                    }
+                    nn.setWho(usersList);
+
+                    notificationActivity.n.add(nn);
+
+                    /*try {
+                        notificationActivity.usersName.add(map.get("firstName").getS() + " " + map.get("lastName").getS());
+                        notificationActivity.usersEmail.add(map.get("emailId").getS());
+                        notificationActivity.notificationARN.put(map.get("emailId").getS(),map.get("notificationARN").getS());
+                    } catch (NumberFormatException e) {
+                        Log.d("number_format_exception", e.getMessage());
+                    }*/
                 }
 
                 if (notificationActivity.userType.equals("SuperAdmin")){
@@ -402,6 +482,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         DynamoDBMapper dynamoDBMapper;
         String dateTime;
+        String notificationMessage;
 
         StoreNotifications(DynamoDBMapper dynamoDBMapper){
             this.dynamoDBMapper = dynamoDBMapper;
@@ -409,8 +490,8 @@ public class NotificationActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            if(notificationActivity.pbNotification != null)
-                notificationActivity.pbNotification.setVisibility(View.VISIBLE);
+            if (notificationActivity.pbDNotification != null)
+                notificationActivity.pbDNotification.setVisibility(View.VISIBLE);
             Calendar c = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy, hh:mm:ss a");
             dateTime = sdf.format(c.getTime());
@@ -419,9 +500,10 @@ public class NotificationActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(String... strings) {
             try {
+                notificationMessage = strings[0];
                 if(dateTime != null) {
                     NotificationsDO notificationsDO = new NotificationsDO();
-                    notificationsDO.setCentre(strings[0]);
+                    notificationsDO.setCentre(notificationMessage);
                     notificationsDO.setWhen(dateTime);
                     notificationsDO.setMessage(strings[1]);
                     notificationsDO.setWho(notificationActivity.selectedList);
@@ -437,15 +519,14 @@ public class NotificationActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if(notificationActivity.pbNotification != null)
-                notificationActivity.pbNotification.setVisibility(View.GONE);
-            if (notificationActivity.pbDNotification != null)
-                notificationActivity.pbDNotification.setVisibility(View.GONE);
             if (result) {
+                new SendNotifications().execute(notificationMessage);
+            } else {
+                if (notificationActivity.pbDNotification != null)
+                    notificationActivity.pbDNotification.setVisibility(View.GONE);
                 if(notificationActivity.dialog != null && notificationActivity.dialog.isShowing()) {
                     notificationActivity.dialog.dismiss();
                     notificationActivity.selectedList.clear();
-                    new ShowNotifications(dynamoDBMapper).execute(notificationActivity.centre);
                 }
             }
         }
@@ -471,34 +552,71 @@ public class NotificationActivity extends AppCompatActivity {
                 AmazonSNSClient snsClient = new AmazonSNSClient(awsCredentials);
 
                 for (int i=0; i<notificationActivity.selectedList.size(); i++) {
-                    PublishRequest publishRequest = new PublishRequest();
-                    publishRequest.setMessage(notificationActivity.notificationARN.get(notificationActivity.selectedList.get(i))+ "$" +strings[0]);
-                    publishRequest.setSubject("BMTT Notification");
-                    publishRequest.withTargetArn(notificationActivity.notificationARN.get(notificationActivity.selectedList.get(i)));
-                    snsClient.publish(publishRequest);
+                    String notificationARN = notificationActivity.notificationARN.get(notificationActivity.selectedList.get(i));
+                    if (!notificationARN.equals("null")) {
+                        PublishRequest publishRequest = new PublishRequest();
+                        publishRequest.setMessage(0 + notificationARN +"$" + strings[0]);
+                        publishRequest.setSubject("BMTT Notification");
+                        publishRequest.withTargetArn(notificationARN);
+                        snsClient.publish(publishRequest);
+                    }
                 }
                 return true;
             } catch (AmazonClientException e){
-                notificationActivity.basicSnackBar("This user is not enabled notification for his device.");
+                notificationActivity.basicSnackBar("Couldn't send notifications to some students.");
                 return false;
             }
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if (result) {
-                new StoreNotifications(notificationActivity.dynamoDBMapper).execute(notificationActivity.centre, notificationMessage);
-            } else {
-                if (notificationActivity.pbDNotification != null)
-                    notificationActivity.pbDNotification.setVisibility(View.GONE);
-                if(notificationActivity.dialog != null && notificationActivity.dialog.isShowing()) {
-                    notificationActivity.dialog.dismiss();
-                    notificationActivity.selectedList.clear();
-                }
+            if(notificationActivity.pbNotification != null)
+                notificationActivity.pbNotification.setVisibility(View.GONE);
+            if (notificationActivity.pbDNotification != null)
+                notificationActivity.pbDNotification.setVisibility(View.GONE);
+            if(notificationActivity.dialog != null && notificationActivity.dialog.isShowing()) {
+                notificationActivity.dialog.dismiss();
+                notificationActivity.selectedList.clear();
+                new ShowNotifications(notificationActivity.dynamoDBMapper).execute(notificationActivity.centre);
             }
         }
     }
 
+    private class DeleteNotification extends AsyncTask<NotificationsDO, Void, Boolean>{
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(NotificationActivity.this, R.style.MyAlertDialogStyle);
+            progressDialog.setMessage("Deleting, please wait.");
+            progressDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(NotificationsDO... notificationsDOS) {
+
+            try {
+                //NotificationsDO notificationsDO = new NotificationsDO();
+                dynamoDBMapper.delete(notificationsDOS[0]);
+                return true;
+            } catch (AmazonClientException e){
+                return false;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            progressDialog.dismiss();
+            if (aBoolean){
+                new ShowNotifications(dynamoDBMapper).execute(centre);
+                Toast.makeText(NotificationActivity.this, "Deleted Successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(NotificationActivity.this, "Failed to delete, try again", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     class StringDateComparator implements Comparator<String>
     {
@@ -508,6 +626,22 @@ public class NotificationActivity extends AppCompatActivity {
         {
             try {
                 dt = dateFormat.parse(lhs).compareTo(dateFormat.parse(rhs));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return dt;
+        }
+    }
+
+    class DateComparator implements Comparator<NotificationsDO>
+    {
+        int dt = 0;
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy, hh:mm:ss a");
+        @Override
+        public int compare(NotificationsDO notificationsDO1, NotificationsDO notificationsDO2) {
+            try {
+                dt = dateFormat.parse(notificationsDO1.getWhen()).compareTo(dateFormat.parse(notificationsDO2.getWhen()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

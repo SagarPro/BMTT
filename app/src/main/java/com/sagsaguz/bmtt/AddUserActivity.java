@@ -5,20 +5,24 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -26,7 +30,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -47,6 +53,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amazonaws.AmazonClientException;
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
@@ -62,20 +69,30 @@ import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.payumoney.core.entity.TransactionResponse;
+import com.payumoney.sdkui.ui.utils.PayUmoneyFlowManager;
+import com.payumoney.sdkui.ui.utils.ResultModel;
 import com.sagsaguz.bmtt.adapter.SpinnerAdapter;
+import com.sagsaguz.bmtt.payu.PayU;
 import com.sagsaguz.bmtt.utils.AWSProvider;
+import com.sagsaguz.bmtt.utils.ActivitiesDO;
 import com.sagsaguz.bmtt.utils.BmttAdminsDO;
 import com.sagsaguz.bmtt.utils.BmttUsersDO;
 import com.sagsaguz.bmtt.utils.Config;
+import com.sagsaguz.bmtt.utils.FileSubmissionDO;
+import com.sagsaguz.bmtt.utils.PaymentDO;
 import com.sagsaguz.bmtt.utils.SendEMail;
 import com.sagsaguz.bmtt.utils.UserModel;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -84,23 +101,32 @@ import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.sagsaguz.bmtt.MainBranchActivity.mainBranchActivity;
+
 public class AddUserActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static int RESULT_LOAD_IMAGE = 1;
     private static final int REQUEST_SEND_SMS = 2 ;
     private static final int REQUEST_STORAGE = 3;
 
+    private int total = 0;
+
     @SuppressLint("StaticFieldLeak")
     private static ScrollView scrollView;
     private CircleImageView ivProfilePic;
     private ImageView action_down, action_up;
     private RelativeLayout rlUserDetails;
-    private EditText etFirstName, etLastName, etAddress,  etPhone, etEmail, etPassword, etExpiryDate, etDOB;
+    private EditText etFirstName, etLastName, etAddress,  etPhone, etEmail, etPassword;
+    private FloatingActionButton add_installment1, add_installment2, sub_installment2, sub_installment3;
+    private EditText installment1, installment2, installment3;
+    private TextView date2, date3, tvTotal, etExpiryDate, etDOB;
+    private RelativeLayout rl_installment1, rl_installment2, rl_installment3;
     private Spinner centreSpinner;
     private CheckBox cbPart1, cbPart2, cbPart3;
     private Button saveUser;
     @SuppressLint("StaticFieldLeak")
     private static ProgressBar pbAddUser;
+    private ProgressDialog progressDialog;
 
     private RelativeLayout rlAddUser;
 
@@ -109,6 +135,7 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
     AmazonDynamoDBClient dynamoDBClient;
 
     private List<String> centreList = new ArrayList<>();
+    private Map<String, String> centreCode = new HashMap<>();
     private ArrayAdapter<String> myAdapter;
 
     String filePath = "null";
@@ -125,6 +152,10 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
 
         rlAddUser = findViewById(R.id.rlAddUser);
 
+        progressDialog = new ProgressDialog(AddUserActivity.this, R.style.MyAlertDialogStyle);
+        progressDialog.setMessage("Uploading, please wait.");
+        progressDialog.setCancelable(true);
+
         scrollView = findViewById(R.id.scrollView);
         action_down = findViewById(R.id.action_down);
         action_down.setVisibility(View.GONE);
@@ -133,6 +164,9 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
         
         rlUserDetails = findViewById(R.id.rlUserDetails);
         ivProfilePic = findViewById(R.id.ivProfilePic);
+        ivProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.bmtt_logo));
+        /*Uri path = Uri.parse("res:///" + R.drawable.bmtt_logo);
+        filePath = String.valueOf(path);*/
         etFirstName = findViewById(R.id.etFirstName);
         etLastName = findViewById(R.id.etLastName);
         etAddress = findViewById(R.id.etAddress);
@@ -145,6 +179,26 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
         etExpiryDate = findViewById(R.id.etExpiryDate);
         etDOB = findViewById(R.id.etDOB);
 
+        rl_installment1 = findViewById(R.id.rl_installment1);
+        rl_installment2 = findViewById(R.id.rl_installment2);
+        rl_installment2.setVisibility(View.GONE);
+        rl_installment3 = findViewById(R.id.rl_installment3);
+        rl_installment3.setVisibility(View.GONE);
+
+        add_installment1 = findViewById(R.id.add_installment1);
+        add_installment2 = findViewById(R.id.add_installment2);
+        add_installment2.setVisibility(View.GONE);
+        sub_installment2 = findViewById(R.id.sub_installment2);
+        sub_installment3 = findViewById(R.id.sub_installment3);
+
+        installment1 = findViewById(R.id.installment1);
+        installment2 = findViewById(R.id.installment2);
+        installment3 = findViewById(R.id.installment3);
+
+        date2 = findViewById(R.id.date2);
+        date3 = findViewById(R.id.date3);
+        tvTotal = findViewById(R.id.tvTotal);
+
         saveUser = findViewById(R.id.saveUser);
 
         pbAddUser = findViewById(R.id.pbAddUser);
@@ -154,7 +208,7 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
         action_down.setOnClickListener(this);
         action_up.setOnClickListener(this);
         saveUser.setOnClickListener(this);
-        ivProfilePic.setOnClickListener(this);
+        //ivProfilePic.setOnClickListener(this);
 
         myCalendar = Calendar.getInstance();
 
@@ -176,51 +230,223 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        etExpiryDate.setOnTouchListener(new View.OnTouchListener() {
+        add_installment1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            public void onClick(View view) {
+                add_installment1.setVisibility(View.GONE);
+                rl_installment2.setVisibility(View.VISIBLE);
+                add_installment2.setVisibility(View.VISIBLE);
+            }
+        });
 
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                              int dayOfMonth) {
-                            myCalendar.set(Calendar.YEAR, year);
-                            myCalendar.set(Calendar.MONTH, monthOfYear);
-                            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                            updateLabel();
-                        }
-                    };
-                    new DatePickerDialog(AddUserActivity.this, date, myCalendar
-                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                            myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                    return true;
+        add_installment2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                add_installment2.setVisibility(View.GONE);
+                rl_installment3.setVisibility(View.VISIBLE);
+                sub_installment2.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        sub_installment2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                add_installment2.setVisibility(View.GONE);
+                rl_installment2.setVisibility(View.GONE);
+                add_installment1.setVisibility(View.GONE);
+                add_installment1.setVisibility(View.VISIBLE);
+                if (!installment2.getText().toString().equals(""))
+                    total = total - Integer.parseInt(installment2.getText().toString());
+                installment2.setText("");
+            }
+        });
+
+        sub_installment3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rl_installment3.setVisibility(View.GONE);
+                add_installment2.setVisibility(View.VISIBLE);
+                sub_installment2.setVisibility(View.VISIBLE);
+                // not used, because total variable is not same as tvTotal
+                //total = total - Integer.parseInt(installment3.getText().toString());
+                installment3.setText("");
+            }
+        });
+
+        date2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        myCalendar.set(Calendar.YEAR, year);
+                        myCalendar.set(Calendar.MONTH, monthOfYear);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        String myFormat = "MMM dd, yyyy";
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                        date2.setText(sdf.format(myCalendar.getTime()));
+                    }
+                };
+                new DatePickerDialog(AddUserActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        date3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        myCalendar.set(Calendar.YEAR, year);
+                        myCalendar.set(Calendar.MONTH, monthOfYear);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        String myFormat = "MMM dd, yyyy";
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                        date3.setText(sdf.format(myCalendar.getTime()));
+                    }
+                };
+                new DatePickerDialog(AddUserActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        installment1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (installment1.getText().toString().equals("")){
+                    total = Integer.parseInt(tvTotal.getText().toString());
+                } else {
+                    total = Integer.parseInt(tvTotal.getText().toString()) - Integer.parseInt(installment1.getText().toString());
                 }
                 return false;
             }
         });
 
-        etDOB.setOnTouchListener(new View.OnTouchListener() {
+        installment1.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (installment1.getText().toString().equals(""))
+                    total = Integer.parseInt(tvTotal.getText().toString());
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (installment1.getText().toString().equals("")){
+                    tvTotal.setText("" + total);
+                } else {
+                    tvTotal.setText("" + (total + Integer.parseInt(charSequence.toString())));
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
 
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                              int dayOfMonth) {
-                            myCalendar.set(Calendar.YEAR, year);
-                            myCalendar.set(Calendar.MONTH, monthOfYear);
-                            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                            updateLabel2();
-                        }
-                    };
-                    new DatePickerDialog(AddUserActivity.this, date, myCalendar
-                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                            myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                    return true;
+        installment2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (installment2.getText().toString().equals("")){
+                    total = Integer.parseInt(tvTotal.getText().toString());
+                } else {
+                    total = Integer.parseInt(tvTotal.getText().toString()) - Integer.parseInt(installment2.getText().toString());
                 }
                 return false;
+            }
+        });
+
+        installment2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (installment2.getText().toString().equals(""))
+                    total = Integer.parseInt(tvTotal.getText().toString());
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (installment2.getText().toString().equals("")){
+                    tvTotal.setText("" + total);
+                } else {
+                    tvTotal.setText("" + (total + Integer.parseInt(charSequence.toString())));
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        installment3.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (installment3.getText().toString().equals("")){
+                    total = Integer.parseInt(tvTotal.getText().toString());
+                } else {
+                    total = Integer.parseInt(tvTotal.getText().toString()) - Integer.parseInt(installment3.getText().toString());
+                }
+                return false;
+            }
+        });
+
+        installment3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (installment3.getText().toString().equals(""))
+                    total = Integer.parseInt(tvTotal.getText().toString());
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (installment3.getText().toString().equals("")){
+                    tvTotal.setText("" + total);
+                } else {
+                    tvTotal.setText("" + (total + Integer.parseInt(charSequence.toString())));
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        etExpiryDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        myCalendar.set(Calendar.YEAR, year);
+                        myCalendar.set(Calendar.MONTH, monthOfYear);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateLabel();
+                    }
+                };
+                new DatePickerDialog(AddUserActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        etDOB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        myCalendar.set(Calendar.YEAR, year);
+                        myCalendar.set(Calendar.MONTH, monthOfYear);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateLabel2();
+                    }
+                };
+                new DatePickerDialog(AddUserActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -253,7 +479,59 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
         myAdapter = new SpinnerAdapter(this, R.layout.centre_spinner_item, centreList);
         centreSpinner.setAdapter(myAdapter);
 
-        new GetCentresList(dynamoDBClient, dynamoDBMapper).execute();
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.bmtt_logo);
+
+        File dir = new File(Environment.getExternalStorageDirectory() + File.separator + "BMTT");
+
+        boolean doSave = true;
+        if (!dir.exists()) {
+            doSave = dir.mkdirs();
+        }
+
+        if (doSave) {
+            saveBitmapToFile(dir,"bmtt_logo.png",bm,Bitmap.CompressFormat.PNG,100);
+        } else {
+            Log.e("app","Couldn't create target directory.");
+        }
+
+        filePath = Environment.getExternalStorageDirectory() + "/BMTT/bmtt_logo.png";
+
+        String userType = getIntent().getStringExtra("UTYPE");
+        if (userType.equals("superAdmin")){
+            new GetCentresList(dynamoDBClient, dynamoDBMapper).execute();
+        } else {
+            centreList.add(userType);
+            centreCode.put(userType, getIntent().getStringExtra("CC"));
+            myAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private boolean saveBitmapToFile(File dir, String fileName, Bitmap bm,
+                                     Bitmap.CompressFormat format, int quality) {
+
+        File imageFile = new File(dir,fileName);
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(imageFile);
+
+            bm.compress(format,quality,fos);
+
+            fos.close();
+
+            return true;
+        }
+        catch (IOException e) {
+            Log.e("app",e.getMessage());
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 
     public void basicSnackBar(String message){
@@ -321,8 +599,7 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
 
     private void uploadProfilePic(){
 
-        if(pbAddUser!=null)
-            pbAddUser.setVisibility(View.VISIBLE);
+        progressDialog.show();
         basicSnackBar("Make sure you are connected to internet");
         try {
             BasicAWSCredentials credentials = new BasicAWSCredentials(Config.ACCESSKEY, Config.SECRETKEY);
@@ -330,7 +607,7 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
             TransferUtility transferUtility = new TransferUtility(s3, AddUserActivity.this);
 
             File file = new File(filePath);
-            String fileName = etPhone.getText().toString() + ".jpg";
+            String fileName = etPhone.getText().toString() + "_p001.jpg";
             final TransferObserver observer = transferUtility.upload(
                     Config.BUCKETNAME + "/profilePics",
                     fileName,
@@ -344,7 +621,8 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
                     if (TransferState.COMPLETED.equals(observer.getState())) {
                         sendEmail();
                         sendSMS();
-                        createUser();
+                        setUpPayment();
+                        //createUser();
                     }
                 }
 
@@ -354,13 +632,13 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
 
                 @Override
                 public void onError(int id, Exception ex) {
-                    if (pbAddUser != null)
-                        pbAddUser.setVisibility(View.GONE);
+                    progressDialog.dismiss();
                     Log.d("profilePicUpload Failed", ex.getMessage());
                 }
             });
         } catch (AmazonClientException e){
             showSnackBar("Network connection error!!");
+            progressDialog.dismiss();
         }
     }
 
@@ -403,9 +681,10 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
                 TextUtils.isEmpty(etPhone.getText().toString()) ||
                 TextUtils.isEmpty(etEmail.getText().toString()) ||
                 TextUtils.isEmpty(etPassword.getText().toString()) ||
-                (!cbPart1.isChecked() &&
+                /*(!cbPart1.isChecked() &&
                 !cbPart2.isChecked() &&
-                !cbPart3.isChecked()) ||
+                !cbPart3.isChecked()) ||*/
+                TextUtils.isEmpty(installment1.getText().toString())||
                 TextUtils.isEmpty(etExpiryDate.getText().toString()) ||
                 ivProfilePic.getDrawable() == null){
             basicSnackBar("Please fill all the required fields.");
@@ -423,23 +702,50 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
                     e.printStackTrace();
                 }
         } else {
-                basicSnackBar("Please enter valid email id.");
-                return false;
-            }
+            basicSnackBar("Please enter valid email id.");
+            return false;
+        }
         return true;
+    }
+
+    private void setUpPayment(){
+
+        PaymentDO paymentDO = new PaymentDO();
+        paymentDO.setEmailId(etEmail.getText().toString());
+        paymentDO.setPhone(etPhone.getText().toString());
+        Map<String, String> installments = new HashMap<>();
+        Map<String, String> payment = new HashMap<>();
+        installments.put(currentDate(), installment1.getText().toString());
+        payment.put(currentDate(), "pending");
+        if (rl_installment2.getVisibility() == View.VISIBLE){
+            installments.put(date2.getText().toString(), installment2.getText().toString());
+            payment.put(date2.getText().toString(), "pending");
+        }
+        if (rl_installment3.getVisibility() == View.VISIBLE){
+            installments.put(date3.getText().toString(), installment3.getText().toString());
+            payment.put(date3.getText().toString(), "pending");
+        }
+        paymentDO.setInstallments(installments);
+        paymentDO.setPayment(payment);
+
+        new PaymentDetails(paymentDO, dynamoDBClient).execute(dynamoDBMapper);
+
     }
 
     private void createUser(){
 
         UserModel userModel = new UserModel();
-        userModel.setEmailId(etEmail.getText().toString());
-        userModel.setFirstName(etFirstName.getText().toString());
-        userModel.setLastName(etLastName.getText().toString());
+        userModel.setEmailId(etEmail.getText().toString().trim());
+        userModel.setFirstName(etFirstName.getText().toString().trim());
+        userModel.setLastName(etLastName.getText().toString().trim());
         userModel.setCentre(centreSpinner.getSelectedItem().toString());
         userModel.setAddress(etAddress.getText().toString());
         userModel.setPhone(etPhone.getText().toString());
         userModel.setPassword(etPassword.getText().toString());
-        if(cbPart1.isChecked()){
+        userModel.setBmttPart1(false);
+        userModel.setBmttPart2(false);
+        userModel.setBmttPart3(false);
+        /*if(cbPart1.isChecked()){
             userModel.setBmttPart1(true);
         } else {
             userModel.setBmttPart1(false);
@@ -453,15 +759,14 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
             userModel.setBmttPart3(true);
         } else {
             userModel.setBmttPart3(false);
-        }
+        }*/
         userModel.setCreatedDate(currentDate());
         userModel.setDob(etDOB.getText().toString());
         userModel.setExpiryDate(etExpiryDate.getText().toString());
-        String profilePicPath = "https://s3.amazonaws.com/brightkidmont/profilePics/"+etPhone.getText().toString()+".jpg";
+        String profilePicPath = "https://s3.amazonaws.com/brightkidmont/profilePics/"+etPhone.getText().toString()+"_p001.jpg";
         userModel.setProfilePic(profilePicPath);
 
-        if(pbAddUser!=null)
-            pbAddUser.setVisibility(View.GONE);
+        progressDialog.dismiss();
         //dynamoDBCRUDOperations.createItem(dynamoDBMapper, userModel);
         new AddUser(userModel, dynamoDBClient).execute(dynamoDBMapper);
     }
@@ -563,10 +868,14 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
     private void sendEmail() {
         String email = etEmail.getText().toString();
         String pas = etPassword.getText().toString();
-        String subject = "Successfully registered as a user in BMTT.";
-        String message = "Welcome to BMTT.\nYour login credentials are,";
+        String subject = "BMTT app - Login credentials";
+        String message = "Hi "+ etFirstName.getText().toString() +" "+ etLastName.getText().toString() + ",\n\n"+getString(R.string.login_message)+"\n\n"+
+                " Here is your login credentials:\n\nLogin Id: "+email+" / "+etPhone.getText().toString()+"\n"+
+                "Password: "+pas+"\n\nIf you face any login issues, please feel free to get in touch at bmtt@brightkidmont.com.\n\n"+
+                "Kind regards,\nTeam BMTT";
+        //String message = "Welcome to BMTT.\nYour login credentials are,\nLoginId : "+email+"\nPassword : "+pas;
         //Creating SendMail object
-        SendEMail sm = new SendEMail(AddUserActivity.this, email, subject, message, pas);
+        SendEMail sm = new SendEMail(AddUserActivity.this, email, subject, message);
         sm.execute();
     }
 
@@ -624,11 +933,71 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private class PaymentDetails extends AsyncTask<DynamoDBMapper, Void, String>{
+
+        PaymentDO paymentDO = new PaymentDO();
+        AmazonDynamoDBClient dynamoDBClient;
+
+        PaymentDetails(PaymentDO paymentDO, AmazonDynamoDBClient dynamoDBClient){
+            this.paymentDO = paymentDO;
+            this.dynamoDBClient = dynamoDBClient;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(DynamoDBMapper... dynamoDBMappers) {
+            try {
+                ScanResult result = null;
+                do {
+                    ScanRequest req = new ScanRequest();
+                    req.setTableName(Config.PAYMENTTABLENAME);
+                    if (result != null) {
+                        req.setExclusiveStartKey(result.getLastEvaluatedKey());
+                    }
+                    result = dynamoDBClient.scan(req);
+                    List<Map<String, AttributeValue>> rows = result.getItems();
+                    for (Map<String, AttributeValue> map : rows) {
+                        try {
+                            if (map.get("emailId").getS().equals(paymentDO.getEmailId()) && map.get("phone").getS().equals(paymentDO.getPhone())) {
+                                return "failed";
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                } while (result.getLastEvaluatedKey() != null);
+
+                dynamoDBMappers[0].save(paymentDO);
+
+                return "added";
+            } catch (AmazonClientException e){
+                addUserActivity.showSnackBar("Network connection error!!");
+                return "error";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String str) {
+            progressDialog.dismiss();
+            if(str.equals("added")) {
+                createUser();
+            } else if(str.equals("failed")) {
+                addUserActivity.basicSnackBar("User with this email id already exists.");
+            }
+        }
+    }
+
     private static class AddUser extends AsyncTask<DynamoDBMapper, Void, String> {
 
         BmttUsersDO bmttUsersDO = new BmttUsersDO();
         UserModel userModel = new UserModel();
         AmazonDynamoDBClient dynamoDBClient;
+        int userId = 0;
+        String lUserId;
 
         AddUser(UserModel userModel, AmazonDynamoDBClient dynamoDBClient){
             this.userModel = userModel;
@@ -637,8 +1006,7 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
 
         @Override
         protected void onPreExecute() {
-            if(pbAddUser!=null)
-                pbAddUser.setVisibility(View.VISIBLE);
+            addUserActivity.progressDialog.show();
             bmttUsersDO.setEmailId(userModel.getEmailId());
             bmttUsersDO.setFirstName(userModel.getFirstName());
             bmttUsersDO.setLastName(userModel.getLastName());
@@ -653,6 +1021,16 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
             bmttUsersDO.setExpiryDate(userModel.getExpiryDate());
             bmttUsersDO.setDob(userModel.getDob());
             bmttUsersDO.setProfilePic(userModel.getProfilePic());
+            bmttUsersDO.setNotificationARN("null");
+            bmttUsersDO.setDocSubmission(false);
+            bmttUsersDO.setAdmissionDone("pending");
+
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat sdfmm = new SimpleDateFormat("MM");
+            SimpleDateFormat sdfyy = new SimpleDateFormat("yy");
+            String codedDate = sdfyy.format(calendar.getTime()) + sdfmm.format(calendar.getTime());
+
+            lUserId = addUserActivity.centreCode.get(userModel.getCentre());
         }
 
         @Override
@@ -669,16 +1047,54 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
                     List<Map<String, AttributeValue>> rows = result.getItems();
                     for (Map<String, AttributeValue> map : rows) {
                         try {
-                            if (map.get("emailId").getS().equals(userModel.getEmailId())) {
+                            if (map.get("emailId").getS().equals(userModel.getEmailId()) && map.get("phone").getS().equals(userModel.getPhone())) {
                                 return "failed";
                             }
+                            String stringId = map.get("userId").getS();
+                            stringId = stringId.substring(5);
+                            if (stringId.length() > 5)
+                                return "userIdError";
+                            if (userId < Integer.parseInt(stringId))
+                                userId = Integer.parseInt(stringId);
+                            /*String stringId = map.get("userId").getS();
+                            stringId = stringId.substring(stringId.length()-2);
+                            if (map.get("userId").getS().contains(lUserId) && userId < Integer.parseInt(stringId))
+                                userId = Integer.parseInt(stringId);
+                            if (stringId.length() > 2)
+                                return "userIdError";*/
                         } catch (NumberFormatException e) {
                             System.out.println(e.getMessage());
                         }
                     }
                 } while (result.getLastEvaluatedKey() != null);
 
+                userId++;
+                StringBuilder extras = new StringBuilder();
+                for (int i=0; i<5-String.valueOf(userId).length(); i++){
+                    extras.append("0");
+                }
+
+                bmttUsersDO.setUserId(lUserId + extras + String.valueOf(userId));
+
                 dynamoDBMappers[0].save(bmttUsersDO);
+
+                FileSubmissionDO fileSubmissionDO = new FileSubmissionDO();
+                fileSubmissionDO.setEmailID(userModel.getEmailId());
+                fileSubmissionDO.setPhone(userModel.getPhone());
+                fileSubmissionDO.setFile1("not");
+                fileSubmissionDO.setFile2("not");
+                fileSubmissionDO.setFile3("not");
+                fileSubmissionDO.setFile4("not");
+                dynamoDBMappers[0].save(fileSubmissionDO);
+
+                ActivitiesDO activitiesDO = new ActivitiesDO();
+                activitiesDO.setEmailID(userModel.getEmailId());
+                activitiesDO.setPhone(userModel.getPhone());
+                List<String> doneList = new ArrayList<>();
+                List<String> attendedList = new ArrayList<>();
+                activitiesDO.setDone(doneList);
+                activitiesDO.setAttended(attendedList);
+                dynamoDBMappers[0].save(activitiesDO);
 
                 return "added";
             } catch (AmazonClientException e){
@@ -689,13 +1105,19 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
 
         @Override
         protected void onPostExecute(String str) {
-            if(pbAddUser!=null)
-                pbAddUser.setVisibility(View.GONE);
-            if(str.equals("added")) {
-                addUserActivity.startActivity(new Intent(addUserActivity, MainBranchActivity.class));
-                addUserActivity.finish();
-            } else if(str.equals("failed")) {
-                addUserActivity.basicSnackBar("User with this email id already exists.");
+            addUserActivity.progressDialog.dismiss();
+            switch (str) {
+                case "added":
+                    mainBranchActivity.finish();
+                    addUserActivity.startActivity(new Intent(addUserActivity, MainBranchActivity.class));
+                    addUserActivity.finish();
+                    break;
+                case "failed":
+                    addUserActivity.basicSnackBar("User with this email id already exists.");
+                    break;
+                case "userIdError":
+                    addUserActivity.basicSnackBar("Cannot register user, please contact Head Office.");
+                    break;
             }
         }
     }
@@ -714,12 +1136,14 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected void onPreExecute() {
             addUserActivity.centreList.clear();
-            addUserActivity.centreList.add("centre *");
+            addUserActivity.centreCode.clear();
+            //addUserActivity.centreList.add("centre *");
         }
 
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
+
                 ScanResult result = null;
                 do {
                     ScanRequest req = new ScanRequest();
@@ -733,12 +1157,14 @@ public class AddUserActivity extends AppCompatActivity implements View.OnClickLi
                         try {
                             if (!map.get("centre").getS().equals("All users")) {
                                 addUserActivity.centreList.add(map.get("centre").getS());
+                                addUserActivity.centreCode.put(map.get("centre").getS(), map.get("centerCode").getS());
                             }
                         } catch (NumberFormatException e) {
                             System.out.println(e.getMessage());
                         }
                     }
                 } while (result.getLastEvaluatedKey() != null);
+
                 return true;
             } catch (AmazonClientException e){
                 addUserActivity.basicSnackBar("Network connection error!!");

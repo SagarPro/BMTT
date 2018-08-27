@@ -96,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
     private static AmazonDynamoDBClient dynamoDBClient;
 
     private static String userType = "user";
-    FirebaseJobDispatcher firebaseJobDispatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,19 +103,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_layout);
 
         loginActivity = LoginActivity.this;
-
-        firebaseJobDispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
-        Job job = firebaseJobDispatcher.newJobBuilder()
-                .setService(FirebaseDispatcher.class)
-                .setLifetime(Lifetime.FOREVER)
-                .setRecurring(true)
-                .setTag("1")
-                .setTrigger(Trigger.executionWindow(300,480))
-                .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
-                .setReplaceCurrent(false)
-                .setConstraints(Constraint.ON_ANY_NETWORK).build();
-
-        firebaseJobDispatcher.mustSchedule(job);
 
         etEmailAddress = findViewById(R.id.etEmailAddress);
         etPassword = findViewById(R.id.etPassword);
@@ -204,7 +190,7 @@ public class LoginActivity extends AppCompatActivity {
                 TextUtils.isEmpty(etPassword.getText().toString())){
             basicSnackBar("Please fill your login details.");
         } else {
-            new validateUser().execute(etEmailAddress.getText().toString(), etPassword.getText().toString());
+            new validateUser().execute(etEmailAddress.getText().toString().trim(), etPassword.getText().toString());
         }
     }
 
@@ -256,7 +242,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 if(userType.equals("user")) {
-                    startActivity(new Intent(getBaseContext(), HomePageActivity.class));
+                    startActivity(new Intent(getBaseContext(), IntroActivity.class));
                 } else if(userType.equals("admin")){
                     Intent intent = new Intent(getBaseContext(), MainBranchActivity.class);
                     startActivity(intent);
@@ -298,16 +284,15 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(String... strings) {
 
-            uEmail = strings[0];
-
             try {
                 ScanRequest request = new ScanRequest().withTableName(Config.USERSTABLENAME);
                 ScanResult response = dynamoDBClient.scan(request);
                 List<Map<String, AttributeValue>> userRows = response.getItems();
                 for (Map<String, AttributeValue> map : userRows) {
                     try {
-                        if (map.get("emailId").getS().equals(strings[0])) {
+                        if (map.get("emailId").getS().equals(strings[0]) || map.get("phone").getS().equals(strings[0])) {
                             if (map.get("password").getS().equals(strings[1])) {
+                                uEmail = map.get("emailId").getS();
                                 try {
                                     expiryDate = df.parse(map.get("expiryDate").getS());
                                 } catch (ParseException e) {
@@ -327,7 +312,6 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("NAME", map.get("firstName").getS() + " " + map.get("lastName").getS());
                                     editor.putString("USERTYPE", "user");
                                     editor.putString("CENTRE", map.get("centre").getS());
-                                    editor.putString("ARN", map.get("notificationARN").getS());
                                     editor.apply();
                                     return true;
                                 }
@@ -343,16 +327,16 @@ public class LoginActivity extends AppCompatActivity {
                 List<Map<String, AttributeValue>> adminRows = response.getItems();
                 for (Map<String, AttributeValue> map : adminRows) {
                     try {
-                        if (map.get("emailId").getS().equals(strings[0])) {
+                        if (map.get("emailId").getS().equals(strings[0]) || map.get("phone").getS().equals(strings[0])) {
                             if (map.get("password").getS().equals(strings[1])) {
-                                if(strings[0].equals(Config.SUPERADMIN)){
+                                if(strings[0].equals(Config.SUPERADMIN) || strings[0].equals(Config.SAPHONE)){
+                                    uEmail = map.get("emailId").getS();
                                     userType = "SuperAdmin";
                                     SharedPreferences.Editor editor = userPreferences.edit();
                                     editor.putString("LOGIN", "login");
                                     editor.putString("EMAIL", Config.SUPERADMIN);
                                     editor.putString("USERTYPE", "SuperAdmin");
                                     editor.putString("CENTRE", "All users");
-                                    editor.putString("ARN", map.get("notificationARN").getS());
                                     editor.apply();
                                     return true;
                                 } else {
@@ -363,6 +347,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("EMAIL", map.get("emailId").getS());
                                     editor.putString("USERTYPE", "admin");
                                     editor.putString("CENTRE", map.get("centre").getS());
+                                    editor.putString("CCODE", map.get("centerCode").getS());
                                     editor.apply();
                                     return true;
                                 }
@@ -451,7 +436,7 @@ public class LoginActivity extends AppCompatActivity {
             String endpointArn = bmttUsersDO.getNotificationARN();
             String token = FirebaseInstanceId.getInstance().getToken();
             boolean updateNeeded = false;
-            boolean createNeeded = (endpointArn == null);
+            boolean createNeeded = (endpointArn == null || endpointArn.equals("null"));
             if (createNeeded) {
                 endpointArn = loginActivity.createEndpoint(strings[0]);
                 createNeeded = false;
@@ -478,11 +463,18 @@ public class LoginActivity extends AppCompatActivity {
                 attribs.put("Enabled", "true");
                 SetEndpointAttributesRequest saeReq = new SetEndpointAttributesRequest().withEndpointArn(endpointArn).withAttributes(attribs);
                 client.setEndpointAttributes(saeReq);
+                SharedPreferences.Editor editor = userPreferences.edit();
+                editor.putString("ARN", endpointArn);
+                editor.apply();
                 return true;
             }
 
             try {
-                bmttUsersDOSet.setEmailId(bmttUsersDO.getEmailId());
+
+                bmttUsersDOSet = dynamoDBMapper.load(BmttUsersDO.class, bmttUsersDO.getEmailId(), bmttUsersDO.getPhone());
+                bmttUsersDOSet.setNotificationARN(endpointArn);
+
+                /*bmttUsersDOSet.setEmailId(bmttUsersDO.getEmailId());
                 bmttUsersDOSet.setPhone(bmttUsersDO.getPhone());
                 bmttUsersDOSet.setAddress(bmttUsersDO.getAddress());
                 bmttUsersDOSet.setBmttPart1(bmttUsersDO.getBmttPart1());
@@ -496,7 +488,10 @@ public class LoginActivity extends AppCompatActivity {
                 bmttUsersDOSet.setLastName(bmttUsersDO.getLastName());
                 bmttUsersDOSet.setPassword(bmttUsersDO.getPassword());
                 bmttUsersDOSet.setProfilePic(bmttUsersDO.getProfilePic());
-                bmttUsersDOSet.setNotificationARN(endpointArn);
+                bmttUsersDOSet.setNotificationARN(endpointArn);*/
+                SharedPreferences.Editor editor = userPreferences.edit();
+                editor.putString("ARN", endpointArn);
+                editor.apply();
                 dynamoDBMapper.save(bmttUsersDOSet);
                 return true;
             } catch (AmazonClientException e){
@@ -590,11 +585,12 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             try {
-                bmttAdminsDOSet.setEmailId(bmttAdminsDO.getEmailId());
-                bmttAdminsDOSet.setPhone(bmttAdminsDO.getPhone());
-                bmttAdminsDOSet.setCentre(bmttAdminsDO.getCentre());
-                bmttAdminsDOSet.setPassword(bmttAdminsDO.getPassword());
+                bmttAdminsDOSet = dynamoDBMapper.load(BmttAdminsDO.class, bmttAdminsDO.getEmailId(), bmttAdminsDO.getPhone());
                 bmttAdminsDOSet.setNotificationARN(endpointArn);
+
+                SharedPreferences.Editor editor = userPreferences.edit();
+                editor.putString("ARN", endpointArn);
+                editor.apply();
                 dynamoDBMapper.save(bmttAdminsDOSet);
                 return true;
             } catch (AmazonClientException e){
@@ -702,9 +698,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void sendEmail(String email, String password) {
         String subject = "Password recovery from BMTT";
-        String message = "Your login credentials are,";
+        String message = "Your login credentials are,\nLoginId : "+email+"\nPassword : "+password;
         //Creating SendMail object
-        SendEMail sm = new SendEMail(LoginActivity.this, email, subject, message, password);
+        SendEMail sm = new SendEMail(LoginActivity.this, email, subject, message);
         sm.execute();
         basicSnackBar("Email sent");
     }

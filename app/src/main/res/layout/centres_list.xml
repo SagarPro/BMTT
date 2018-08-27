@@ -11,17 +11,18 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="@color/grey"
-        android:paddingStart="30dp"
-        android:paddingEnd="20dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_toEndOf="@id/view"
         android:text="Centre Name"
         android:maxLines="1"
+        android:ellipsize="end"
         android:id="@+id/centreName" />
 
     <View
-        android:layout_width="3dp"
+        android:layout_width="2dp"
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
         android:id="@+id/view"/>

@@ -29,10 +29,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_alignParentBottom="true"
         android:layout_margin="5dp"
         android:orientation="horizontal"
+        android:visibility="invisible"
         android:id="@+id/llBottomMenu">
 
         <ImageView
@@ -72,7 +73,8 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/slightWhite"/>
+            android:background="@color/slightWhite"
+            android:visibility="gone"/>
 
         <ImageView
             android:layout_width="0dp"
@@ -81,6 +83,32 @@
             android:padding="10dp"
             android:layout_weight="1"
             android:id="@+id/ivQA"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/slightWhite"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_webinar"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:id="@+id/ivWebinar"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/slightWhite"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_attachment"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:id="@+id/ivAttachment"/>
 
         <View
             android:layout_width="1dp"

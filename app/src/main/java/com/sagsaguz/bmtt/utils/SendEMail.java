@@ -28,19 +28,27 @@ public class SendEMail extends AsyncTask<Void,Void,Void> {
     private final String email;
     private final String subject;
     private final String message;
-    private final String password;
+    //private final String password;
 
     //ProgressDialog to show while sending email
    // private ProgressDialog progressDialog;
 
     //Class Constructor
-    public SendEMail(Context context, String email, String subject, String message, String password){
+    /*public SendEMail(Context context, String email, String subject, String message, String password){
         //Initializing variables
         this.context = context;
         this.email = email;
         this.subject = subject;
         this.message = message;
         this.password = password;
+    }*/
+
+    public SendEMail(Context context, String email, String subject, String message){
+        //Initializing variables
+        this.context = context;
+        this.email = email;
+        this.subject = subject;
+        this.message = message;
     }
 
     @Override
@@ -84,7 +92,8 @@ public class SendEMail extends AsyncTask<Void,Void,Void> {
             //Adding subject
             mm.setSubject(subject);
             //Adding message and Password
-            mm.setText(message+"\nLoginId : "+email+"\nPassword : "+password);
+            //mm.setText(message+"\nLoginId : "+email+"\nPassword : "+password);
+            mm.setText(message);
             //Sending email
             Transport.send(mm);
 

@@ -23,4 +23,15 @@
     <color name="red">#e74c3c</color>
     <color name="orange">#e67e22</color>
     <color name="green">#2ecc71</color>
+    <color name="yellow">#f1c40f</color>
+
+    <!--Intro activity colors-->
+    <color name="iPurple">#8e44ad</color>
+    <color name="iGreen">#27ae60</color>
+    <color name="iOrange">#f39c12</color>
+    <color name="iDarkRed">#c0392b</color>
+    <color name="iNight">#2c3e50</color>
+    <color name="iPink">#be2edd</color>
+    <color name="iBlue">#22a6b3</color>
+    <color name="iRed">#ff3838</color>
 </resources>

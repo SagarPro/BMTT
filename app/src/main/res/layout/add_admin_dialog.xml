@@ -56,6 +56,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/etAdminCentre"
+            android:text="Center Code :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/centerCode"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/centerCode"
+            android:hint="Enter Center Code"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorAccent"
+            android:id="@+id/etCenterCode"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etCenterCode"
             android:text="Centre Email Address :"
             android:textSize="14sp"
             android:textColor="@color/colorAccent"
@@ -69,6 +92,7 @@
             android:hint="Enter centre email address"
             android:textSize="18sp"
             android:textColor="@color/grey"
+            android:inputType="textEmailAddress"
             android:padding="8dp"
             android:maxLines="1"
             android:layout_marginBottom="5dp"
@@ -92,6 +116,7 @@
             android:hint="Enter centre phone number"
             android:textSize="18sp"
             android:textColor="@color/grey"
+            android:inputType="phone"
             android:padding="8dp"
             android:maxLines="1"
             android:layout_marginBottom="5dp"
@@ -117,8 +142,32 @@
             android:textColor="@color/grey"
             android:padding="8dp"
             android:maxLines="1"
+            android:layout_marginBottom="5dp"
             android:background="@color/colorAccent"
             android:id="@+id/etAdminPassword"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etAdminPassword"
+            android:text="Centre Location :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/location"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/location"
+            android:hint="Enter centre Location"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:inputType="text"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:background="@color/colorAccent"
+            android:id="@+id/etLocation"/>
 
     </RelativeLayout>
 

@@ -39,7 +39,8 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
         assert inflater != null;
         View row=inflater.inflate(R.layout.centre_spinner_item, parent, false);
         TextView label=row.findViewById(R.id.tvCentreSpinner);
-        label.setText(objects.get(position));
+        if (objects.size()!=0)
+            label.setText(objects.get(position));
 
         /*if (position == 0) {//Special style for dropdown header
             label.setTextColor(context.getResources().getColor(R.color.text_hint_color));

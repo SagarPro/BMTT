@@ -36,7 +36,36 @@
         android:layout_below="@+id/tvTitle"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
+        android:layout_above="@+id/btnNCancel"
         android:id="@+id/rlDetails">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To :"
+            android:textSize="14sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/to"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/scrollView"
+            android:layout_below="@id/to">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="Click here"
+                android:textSize="18sp"
+                android:textColor="@color/grey"
+                android:padding="8dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorAccent"
+                android:id="@+id/tvTo"/>
+
+        </ScrollView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,6 +73,7 @@
             android:text="Notification message :"
             android:textSize="14sp"
             android:textColor="@color/colorAccent"
+            android:layout_below="@id/scrollView"
             android:layout_marginBottom="3dp"
             android:id="@+id/message"/>
 
@@ -60,28 +90,6 @@
             android:background="@color/colorAccent"
             android:id="@+id/etMessage"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/etMessage"
-            android:text="To :"
-            android:textSize="14sp"
-            android:textColor="@color/colorAccent"
-            android:layout_marginBottom="3dp"
-            android:id="@+id/to"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/to"
-            android:text="Click here"
-            android:textSize="18sp"
-            android:textColor="@color/grey"
-            android:padding="8dp"
-            android:layout_marginBottom="5dp"
-            android:background="@color/colorAccent"
-            android:id="@+id/tvTo"/>
-
     </RelativeLayout>
 
     <Button
@@ -90,7 +98,7 @@
         android:text="cancel"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
-        android:layout_below="@id/rlDetails"
+        android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark"
         android:id="@+id/btnNCancel"/>
 
@@ -100,8 +108,8 @@
         android:text="Send"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
-        android:layout_below="@id/rlDetails"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark"
         android:id="@+id/btnNSend"/>
 
